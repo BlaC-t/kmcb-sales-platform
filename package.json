@@ -1,0 +1,15 @@
+{
+  "name": "sales-platform",
+  "version": "0.0.0",
+  "private": true,
+  "description": "面向客户沟通、工艺推荐、设备选型、工程深化与销售交付的 Sales Platform（设计阶段）",
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "docs:check": "node scripts/check-docs.mjs",
+    "design:status": "node -e \"console.log('Design baseline only; implementation starts after approval.')\""
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

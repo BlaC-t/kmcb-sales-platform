@@ -1,0 +1,1805 @@
+openapi: 3.1.0
+info:
+  title: Sales Platform API
+  version: 0.1.0-draft
+  description: >-
+    Design contract for customer-facing sales presentation, guided consultation,
+    recommendation, sales proposal editing, preliminary handout, engineering
+    refinement, approval and release. Draft; integration details require review.
+    Sales Platform is external to BMS/CRM; BMS authentication is required when
+    opening the platform and projects are created inside Sales Platform.
+servers:
+  - url: https://example.invalid/api/v1
+    description: Placeholder only
+security:
+  - bearerAuth: []
+tags:
+  - name: Sales Experience
+  - name: Content Management
+  - name: Sales Proposals
+  - name: Customer Handouts
+  - name: Projects
+  - name: Recommendations
+  - name: Engineering
+  - name: Releases
+  - name: Governance
+  - name: Product Imports
+paths:
+  /sales-content:
+    get:
+      tags: [Sales Experience]
+      operationId: listPublishedSalesContent
+      summary: List customer-safe published presentation content
+      parameters:
+        - name: locale
+          in: query
+          schema: { $ref: '#/components/schemas/SupportedLocale' }
+      responses:
+        '200':
+          description: Published content collections and pinned versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/SalesContentCollection' }
+  /sales-content/releases/current:
+    get:
+      tags: [Sales Experience]
+      operationId: getCurrentSalesContentRelease
+      summary: Get the current immutable customer-safe content release for a locale and channel
+      parameters:
+        - name: locale
+          in: query
+          required: true
+          schema: { $ref: '#/components/schemas/SupportedLocale' }
+        - name: channel
+          in: query
+          schema: { type: string, default: SALES }
+        - name: If-None-Match
+          in: header
+          schema: { type: string }
+      responses:
+        '200':
+          description: Current release; ETag equals the manifest checksum
+          headers:
+            ETag:
+              schema: { type: string }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesContentRelease' }
+        '304':
+          description: Client already has the current release
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /content-pages:
+    get:
+      tags: [Content Management]
+      operationId: listContentPages
+      summary: List editable content pages and locale completeness
+      responses:
+        '200':
+          description: Content pages visible to the current editor
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ContentPage' }
+    post:
+      tags: [Content Management]
+      operationId: createContentPage
+      summary: Create a stable content page identity; requires sales_platform.content_edit
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateContentPageRequest' }
+      responses:
+        '201':
+          description: Content page created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentPage' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /content-pages/{contentPageId}/revisions:
+    post:
+      tags: [Content Management]
+      operationId: createContentRevision
+      summary: Create a new language-independent page structure revision
+      parameters:
+        - $ref: '#/components/parameters/ContentPageId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Draft content revision created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentRevision' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /content-revisions/{contentRevisionId}/translations/{locale}:
+    put:
+      tags: [Content Management]
+      operationId: saveContentTranslation
+      summary: Save one locale translation and block texts; requires assigned translation permission
+      parameters:
+        - $ref: '#/components/parameters/ContentRevisionId'
+        - $ref: '#/components/parameters/LocalePath'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ContentTranslationInput' }
+      responses:
+        '200':
+          description: Translation saved; affected fields may remain draft or stale
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentTranslation' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /content-revisions/{contentRevisionId}/blocks:
+    put:
+      tags: [Content Management]
+      operationId: replaceContentBlocks
+      summary: Replace the ordered structured blocks in a draft revision
+      parameters:
+        - $ref: '#/components/parameters/ContentRevisionId'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/ContentBlockInput' }
+      responses:
+        '200':
+          description: Draft structure updated and affected translations marked stale
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentRevision' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /content-revisions/{contentRevisionId}:submit-review:
+    post:
+      tags: [Content Management]
+      operationId: submitContentRevisionReview
+      summary: Freeze a revision and submit its selected locale translations for review
+      parameters:
+        - $ref: '#/components/parameters/ContentRevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Revision entered review
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentRevision' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /content-revisions/{contentRevisionId}:approve:
+    post:
+      tags: [Content Management]
+      operationId: approveContentRevision
+      summary: Approve reviewed structure and locale translations; requires sales_platform.content_review
+      parameters:
+        - $ref: '#/components/parameters/ContentRevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Revision approved for inclusion in a content release
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContentRevision' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /media-assets:
+    post:
+      tags: [Content Management]
+      operationId: createMediaAsset
+      summary: Register an uploaded media asset for scanning and variant generation
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateMediaAssetRequest' }
+      responses:
+        '202':
+          description: Media asset accepted for validation and processing
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaAsset' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /content-releases:
+    post:
+      tags: [Content Management]
+      operationId: createContentRelease
+      summary: Freeze approved page translations and media into a draft release manifest
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [collectionId, channel, locales]
+              properties:
+                collectionId: { type: string, format: uuid }
+                channel: { type: string, default: SALES }
+                locales:
+                  type: array
+                  uniqueItems: true
+                  items: { $ref: '#/components/schemas/SupportedLocale' }
+                publishAtUtc: { type: [string, 'null'], format: date-time }
+      responses:
+        '201':
+          description: Draft content release frozen
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesContentRelease' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /content-releases/{contentReleaseId}:publish:
+    post:
+      tags: [Content Management]
+      operationId: publishContentRelease
+      summary: Publish or schedule an immutable release; requires sales_platform.content_publish
+      parameters:
+        - $ref: '#/components/parameters/ContentReleaseId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Release published or scheduled
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesContentRelease' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /content-releases/{contentReleaseId}:rollback:
+    post:
+      tags: [Content Management]
+      operationId: rollbackContentRelease
+      summary: Restore a prior verified release without mutating either manifest
+      parameters:
+        - $ref: '#/components/parameters/ContentReleaseId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: { type: string, maxLength: 2000 }
+      responses:
+        '200':
+          description: Prior release restored as current
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesContentRelease' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /sales-consultations:
+    post:
+      tags: [Sales Experience]
+      operationId: createSalesConsultation
+      summary: Start a guided customer consultation session
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [projectId, questionnaireVersionId, locale, timeZone]
+              properties:
+                projectId: { type: string, format: uuid }
+                questionnaireVersionId: { type: string, format: uuid }
+                locale: { $ref: '#/components/schemas/SupportedLocale' }
+                timeZone: { type: string, description: IANA time zone identifier }
+                customerDisplayName: { type: [string, 'null'] }
+                customerOrganizationName: { type: [string, 'null'] }
+                contentReleaseId: { type: [string, 'null'], format: uuid, description: Optional explicit release; otherwise the server pins the current verified release }
+      responses:
+        '201':
+          description: Consultation created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesConsultation' }
+  /sales-consultations/{consultationId}/answers:
+    put:
+      tags: [Sales Experience]
+      operationId: saveSalesConsultationAnswers
+      summary: Save answer batch while preserving original wording and units
+      parameters:
+        - $ref: '#/components/parameters/ConsultationId'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/SalesAnswerInput' }
+      responses:
+        '200':
+          description: Answers mapped and consultation recalculated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesConsultation' }
+  /sales-consultations/{consultationId}:complete:
+    post:
+      tags: [Sales Experience, Projects]
+      operationId: completeSalesConsultation
+      summary: Freeze answers into a requirement version ready for validation
+      parameters:
+        - $ref: '#/components/parameters/ConsultationId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Consultation completed and requirement version created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RequirementVersion' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /projects:
+    post:
+      tags: [Projects]
+      operationId: createProject
+      summary: Create a project owned by Sales Platform
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: Sales Platform project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /projects/{projectId}:
+    get:
+      tags: [Projects]
+      operationId: getProject
+      summary: Get a project visible to the current subject
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        '200':
+          description: Project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/requirement-versions:
+    post:
+      tags: [Projects]
+      operationId: createRequirementVersion
+      summary: Create a new editable requirement version
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequirementPayload'
+      responses:
+        '201':
+          description: Requirement version created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequirementVersion'
+  /requirement-versions/{versionId}:
+    patch:
+      tags: [Projects]
+      operationId: updateRequirementVersion
+      summary: Update an editable requirement version
+      parameters:
+        - $ref: '#/components/parameters/VersionId'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/RequirementPayload'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequirementVersion'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /requirement-versions/{versionId}:validate:
+    post:
+      tags: [Projects]
+      operationId: validateRequirementVersion
+      summary: Validate a requirement version before snapshotting
+      parameters:
+        - $ref: '#/components/parameters/VersionId'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /requirement-versions/{versionId}:snapshot:
+    post:
+      tags: [Projects]
+      operationId: snapshotRequirementVersion
+      summary: Freeze an immutable recommendation input snapshot
+      parameters:
+        - $ref: '#/components/parameters/VersionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Immutable input snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputSnapshot'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /recommendation-runs:
+    post:
+      tags: [Recommendations]
+      operationId: startRecommendation
+      summary: Start an asynchronous recommendation run
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [inputSnapshotId]
+              properties:
+                inputSnapshotId:
+                  type: string
+                  format: uuid
+                scenarioPreferences:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '202':
+          description: Recommendation queued
+          headers:
+            Location:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationRun'
+  /recommendation-runs/{runId}:
+    get:
+      tags: [Recommendations]
+      operationId: getRecommendationRun
+      summary: Get recommendation run status and progress
+      parameters:
+        - $ref: '#/components/parameters/RunId'
+      responses:
+        '200':
+          description: Run state and progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationRun'
+  /recommendation-runs/{runId}/candidates:
+    get:
+      tags: [Recommendations]
+      operationId: listCandidateSolutions
+      summary: List ranked candidate solutions for a run
+      parameters:
+        - $ref: '#/components/parameters/RunId'
+      responses:
+        '200':
+          description: Ranked candidates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CandidateSolutionSummary'
+  /candidate-solutions/{candidateId}:
+    get:
+      tags: [Recommendations]
+      operationId: getCandidateSolution
+      summary: Get a candidate flowsheet, equipment options and explanations
+      parameters:
+        - $ref: '#/components/parameters/CandidateId'
+      responses:
+        '200':
+          description: Candidate with graph, equipment and explanations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandidateSolution'
+  /candidate-solutions/{candidateId}:select:
+    post:
+      tags: [Recommendations, Sales Proposals]
+      operationId: selectCandidateForSalesProposal
+      summary: Record sales selection and create sales proposal revision 1
+      parameters:
+        - $ref: '#/components/parameters/CandidateId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salesNote: { type: string, maxLength: 4000 }
+                clientPreference:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '201':
+          description: Sales proposal and initial revision created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesProposalRevision'
+  /sales-proposal-revisions/{proposalRevisionId}:
+    get:
+      tags: [Sales Proposals]
+      operationId: getSalesProposalRevision
+      summary: Get a sales proposal revision and equipment selections
+      parameters:
+        - $ref: '#/components/parameters/ProposalRevisionId'
+      responses:
+        '200':
+          description: Sales proposal graph, equipment options and current selections
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesProposalRevision' }
+  /sales-proposal-revisions/{proposalRevisionId}/equipment-selections:
+    put:
+      tags: [Sales Proposals]
+      operationId: replaceSalesEquipmentSelections
+      summary: Switch equipment options or quantities and revalidate the sales proposal
+      parameters:
+        - $ref: '#/components/parameters/ProposalRevisionId'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/EquipmentSelection' }
+      responses:
+        '200':
+          description: Updated proposal with recalculated warnings
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SalesProposalRevision' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /sales-proposal-revisions/{proposalRevisionId}:generate-handout:
+    post:
+      tags: [Sales Proposals, Customer Handouts]
+      operationId: generatePreliminaryCustomerHandout
+      summary: Freeze and render a preliminary customer handout
+      parameters:
+        - $ref: '#/components/parameters/ProposalRevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locale: { $ref: '#/components/schemas/SupportedLocale' }
+                timeZone: { type: string, description: IANA time zone identifier }
+                formats:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  items: { enum: [PDF, DOCX] }
+      responses:
+        '202':
+          description: Immutable handout frozen, queued for rendering, then pending permission review
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerHandout' }
+  /sales-proposal-revisions/{proposalRevisionId}:submit-engineering:
+    post:
+      tags: [Sales Proposals, Engineering]
+      operationId: submitSalesProposalToEngineering
+      summary: Freeze the sales revision and create engineering solution revision 1
+      parameters:
+        - $ref: '#/components/parameters/ProposalRevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Handoff accepted and engineering revision created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SolutionRevision' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /customer-handouts/{handoutId}:
+    get:
+      tags: [Customer Handouts]
+      operationId: getCustomerHandout
+      summary: Get an immutable preliminary customer handout and review state
+      parameters:
+        - $ref: '#/components/parameters/HandoutId'
+      responses:
+        '200':
+          description: Preliminary handout manifest and generated files
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerHandout' }
+  /customer-handouts/{handoutId}:submit-review:
+    post:
+      tags: [Customer Handouts]
+      operationId: submitCustomerHandoutReview
+      summary: Submit the immutable handout files for permission-based review
+      parameters:
+        - $ref: '#/components/parameters/HandoutId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Review request opened
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerHandoutReview' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /customer-handouts/{handoutId}:approve:
+    post:
+      tags: [Customer Handouts]
+      operationId: approveCustomerHandout
+      summary: Approve a handout for on-site delivery; requires customer.handout.review
+      parameters:
+        - $ref: '#/components/parameters/HandoutId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reviewedManifestChecksum]
+              properties:
+                reviewedManifestChecksum: { type: string }
+                comment: { type: [string, 'null'], maxLength: 2000 }
+      responses:
+        '200':
+          description: Handout approved for delivery
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerHandout' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /customer-handouts/{handoutId}:reject:
+    post:
+      tags: [Customer Handouts]
+      operationId: rejectCustomerHandout
+      summary: Reject a handout and return it to sales
+      parameters:
+        - $ref: '#/components/parameters/HandoutId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason, reviewedManifestChecksum]
+              properties:
+                reason: { type: string, maxLength: 2000 }
+                reviewedManifestChecksum: { type: string }
+      responses:
+        '200':
+          description: Handout rejected
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerHandout' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /solution-revisions/{revisionId}:
+    get:
+      tags: [Engineering]
+      operationId: getSolutionRevision
+      summary: Get an engineering solution revision
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+      responses:
+        '200':
+          description: Engineering revision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionRevision'
+  /solution-revisions/{revisionId}/flowsheet:
+    put:
+      tags: [Engineering]
+      operationId: replaceRevisionFlowsheet
+      summary: Replace the editable flowsheet of an engineering revision
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flowsheet'
+      responses:
+        '200':
+          description: Saved revision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionRevision'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /solution-revisions/{revisionId}:validate:
+    post:
+      tags: [Engineering]
+      operationId: validateSolutionRevision
+      summary: Validate engineering graph, equipment and release readiness
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+      responses:
+        '200':
+          description: Validation issues and readiness
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /solution-revisions/{revisionId}:submit-review:
+    post:
+      tags: [Engineering]
+      operationId: submitSolutionRevision
+      summary: Submit an engineering revision for formal review
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Review request opened
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewRequest'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /solution-revisions/{revisionId}:approve:
+    post:
+      tags: [Engineering]
+      operationId: approveSolutionRevision
+      summary: Approve an engineering revision
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment: { type: string, maxLength: 4000 }
+      responses:
+        '200':
+          description: Revision approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionRevision'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /solution-revisions/{revisionId}:release:
+    post:
+      tags: [Engineering, Releases]
+      operationId: releaseSolutionRevision
+      summary: Freeze and publish an approved engineering revision
+      parameters:
+        - $ref: '#/components/parameters/RevisionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202':
+          description: Release frozen; files are being generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleasePackage'
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /releases/{releaseId}:
+    get:
+      tags: [Releases]
+      operationId: getReleasePackage
+      summary: Get an immutable approved release package
+      parameters:
+        - $ref: '#/components/parameters/ReleaseId'
+      responses:
+        '200':
+          description: Immutable sales release manifest and files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleasePackage'
+  /data-change-requests:
+    post:
+      tags: [Governance]
+      operationId: createDataChangeRequest
+      summary: Create a governed data change request
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataChangeRequestInput'
+      responses:
+        '201':
+          description: Draft change request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataChangeRequest'
+  /llm-runs:
+    get:
+      tags: [Governance]
+      operationId: listLlmRuns
+      summary: List auditable Phase 1 LLM experiment runs visible to the current subject
+      parameters:
+        - name: projectId
+          in: query
+          schema: { type: [string, 'null'], format: uuid }
+        - name: purpose
+          in: query
+          schema: { type: [string, 'null'] }
+      responses:
+        '200':
+          description: LLM experiment runs
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/LlmRun' }
+  /admin/product-imports:
+    post:
+      tags: [Product Imports]
+      operationId: createProductImport
+      summary: Upload a product workbook into staging; no published equipment data is changed
+      x-required-permission: sales_platform.product_import.upload
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary }
+      responses:
+        '202':
+          description: Workbook accepted for structure discovery
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductImportBatch' }
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /admin/product-imports/{importId}:
+    get:
+      tags: [Product Imports]
+      operationId: getProductImport
+      summary: Get workbook, region, diff and issue counts for one import batch
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+      responses:
+        '200':
+          description: Current import state
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductImportBatch' }
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /admin/product-imports/{importId}/regions:
+    get:
+      tags: [Product Imports]
+      operationId: listProductImportRegions
+      summary: List discovered logical tables and their exact original Excel columns
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+      responses:
+        '200':
+          description: Logical workbook regions
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ProductImportRegion' }
+  /admin/product-imports/{importId}/records:
+    get:
+      tags: [Product Imports]
+      operationId: listProductImportRecords
+      summary: List model-level additions, updates, unchanged rows and conflicts
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+        - name: action
+          in: query
+          schema: { $ref: '#/components/schemas/ProductImportAction' }
+        - name: cursor
+          in: query
+          schema: { type: [string, 'null'] }
+      responses:
+        '200':
+          description: Paged import records with field-level diffs
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: '#/components/schemas/ProductImportRecord' }
+                  nextCursor: { type: [string, 'null'] }
+  /admin/product-imports/{importId}:submit-review:
+    post:
+      tags: [Product Imports]
+      operationId: submitProductImportReview
+      summary: Freeze the selected field decisions and submit the batch for equipment review
+      x-required-permission: sales_platform.product_import.map
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '200':
+          description: Import batch submitted for review
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductImportBatch' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+  /admin/product-imports/{importId}:approve:
+    post:
+      tags: [Product Imports]
+      operationId: approveProductImport
+      summary: Approve a reviewed change manifest without publishing equipment versions yet
+      x-required-permission: sales_platform.product_import.review
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '200':
+          description: Import batch approved
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductImportBatch' }
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /admin/product-imports/{importId}:publish:
+    post:
+      tags: [Product Imports]
+      operationId: publishProductImport
+      summary: Publish accepted records as new immutable equipment model/spec versions
+      x-required-permission: sales_platform.equipment.publish
+      parameters:
+        - $ref: '#/components/parameters/ImportId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '202':
+          description: Publication started; old published specifications are not edited in place
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductImportBatch' }
+        '422':
+          $ref: '#/components/responses/ValidationFailed'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: BMS-derived-token-contract-to-be-confirmed
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, minLength: 8, maxLength: 128 }
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema: { type: string }
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    VersionId:
+      name: versionId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    RunId:
+      name: runId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    CandidateId:
+      name: candidateId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ConsultationId:
+      name: consultationId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ProposalRevisionId:
+      name: proposalRevisionId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    HandoutId:
+      name: handoutId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    RevisionId:
+      name: revisionId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ReleaseId:
+      name: releaseId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ContentPageId:
+      name: contentPageId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ContentRevisionId:
+      name: contentRevisionId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ContentReleaseId:
+      name: contentReleaseId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    ImportId:
+      name: importId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    LocalePath:
+      name: locale
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/SupportedLocale' }
+  responses:
+    NotFound:
+      description: Not found or not visible
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    Forbidden:
+      description: Authenticated but not permitted
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    Conflict:
+      description: Duplicate, state or optimistic concurrency conflict
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    ValidationFailed:
+      description: Domain validation failed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+  schemas:
+    ProductImportStatus:
+      type: string
+      enum: [UPLOADED, DISCOVERING, MAPPING_REQUIRED, EXTRACTING, DIFF_READY, REVIEW_REQUIRED, APPROVED, PUBLISHED, FAILED, CANCELLED]
+    ProductImportAction:
+      type: string
+      enum: [NEW_MODEL, NEW_CONFIGURATION, UPDATE, FORMAT_ONLY, UNCHANGED, CONFLICT, INVALID, UNCLASSIFIED]
+    ProductImportBatch:
+      type: object
+      required: [id, fileName, fileChecksum, status, sheetCount, regionCount, recordCount, counts, rowVersion, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        fileName: { type: string }
+        fileChecksum: { type: string, pattern: '^[a-f0-9]{64}$' }
+        parserVersion: { type: string }
+        status: { $ref: '#/components/schemas/ProductImportStatus' }
+        sheetCount: { type: integer, minimum: 0 }
+        regionCount: { type: integer, minimum: 0 }
+        recordCount: { type: integer, minimum: 0 }
+        counts:
+          type: object
+          required: [new, update, unchanged, conflict, invalid]
+          properties:
+            new: { type: integer, minimum: 0 }
+            update: { type: integer, minimum: 0 }
+            unchanged: { type: integer, minimum: 0 }
+            conflict: { type: integer, minimum: 0 }
+            invalid: { type: integer, minimum: 0 }
+        rowVersion: { type: integer, minimum: 1 }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: [string, 'null'], format: date-time }
+    ProductImportColumn:
+      type: object
+      required: [fieldKey, columnTitle, sourceColumn, displayOrder]
+      properties:
+        fieldKey: { type: string }
+        columnTitle: { type: string, description: Exact original Excel header text }
+        sourceColumn: { type: string, description: Excel column letter }
+        displayOrder: { type: integer, minimum: 0 }
+    ProductImportRegion:
+      type: object
+      required: [id, sheetName, sectionName, headerRow, recordCount, productKind, columns, status]
+      properties:
+        id: { type: string, format: uuid }
+        sheetName: { type: string }
+        sectionName: { type: string }
+        headerRow: { type: integer, minimum: 1 }
+        recordCount: { type: integer, minimum: 0 }
+        productKind: { type: [string, 'null'] }
+        columns:
+          type: array
+          items: { $ref: '#/components/schemas/ProductImportColumn' }
+        status: { enum: [DISCOVERED, MAPPING_REQUIRED, MAPPED, EXTRACTED, INVALID] }
+    ProductImportFieldDiff:
+      type: object
+      required: [fieldKey, columnTitle, changeType, oldValue, proposedValue, decision]
+      properties:
+        fieldKey: { type: string }
+        columnTitle: { type: string }
+        sourceCell: { type: [string, 'null'] }
+        changeType: { enum: [NEW_VALUE, UPDATED, CLEARED, FORMAT_ONLY, COLUMN_REGISTERED, COLUMN_TITLE_UPDATED, CONFLICT, NO_CHANGE] }
+        oldValue: {}
+        proposedValue: {}
+        originalText: { type: [string, 'null'] }
+        decision: { enum: [PENDING, ACCEPTED, REJECTED, MANUAL_REVIEW] }
+    ProductImportRecord:
+      type: object
+      required: [id, sourceRow, action, decision, fieldDiffs]
+      properties:
+        id: { type: string, format: uuid }
+        sourceRow: { type: integer, minimum: 1 }
+        modelCode: { type: [string, 'null'] }
+        drawingNo: { type: [string, 'null'] }
+        identityKey: { type: [string, 'null'] }
+        action: { $ref: '#/components/schemas/ProductImportAction' }
+        decision: { enum: [PENDING, ACCEPTED, REJECTED, MANUAL_REVIEW] }
+        fieldDiffs:
+          type: array
+          items: { $ref: '#/components/schemas/ProductImportFieldDiff' }
+    SupportedLocale:
+      type: string
+      enum: [zh-CN, en, ru, uk]
+      default: zh-CN
+    SalesContentCollection:
+      type: object
+      required: [id, code, sectionType, locale, versionId, title, blocks]
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        sectionType: { enum: [COMPANY, UZBEKISTAN_SUBSIDIARY, PRODUCTION_CAPABILITY, PRODUCT_FUNCTION, AUTHORIZED_CASE, OTHER] }
+        locale: { $ref: '#/components/schemas/SupportedLocale' }
+        versionId: { type: string, format: uuid }
+        title: { type: string }
+        blocks:
+          type: array
+          items:
+            type: object
+            required: [type, payload]
+            properties:
+              type: { type: string }
+              payload: { type: object, additionalProperties: true }
+    ContentTranslationStatus:
+      type: string
+      enum: [MISSING, DRAFT, STALE, IN_REVIEW, APPROVED]
+    CreateContentPageRequest:
+      type: object
+      required: [collectionId, pageCode, routePath, sectionType]
+      properties:
+        collectionId: { type: string, format: uuid }
+        pageCode: { type: string }
+        routePath: { type: string }
+        sectionType: { enum: [COMPANY, UZBEKISTAN_SUBSIDIARY, PRODUCTION_CAPABILITY, PRODUCT_FUNCTION, AUTHORIZED_CASE, OTHER] }
+        sortOrder: { type: integer, default: 0 }
+        customerSafe: { type: boolean, default: true }
+    ContentPage:
+      allOf:
+        - $ref: '#/components/schemas/CreateContentPageRequest'
+        - type: object
+          required: [id, active]
+          properties:
+            id: { type: string, format: uuid }
+            active: { type: boolean }
+            currentRevisionId: { type: [string, 'null'], format: uuid }
+            localeStatuses:
+              type: object
+              additionalProperties: { $ref: '#/components/schemas/ContentTranslationStatus' }
+    ContentRevision:
+      type: object
+      required: [id, pageId, versionNo, sourceLocale, status, blocks, rowVersion]
+      properties:
+        id: { type: string, format: uuid }
+        pageId: { type: string, format: uuid }
+        versionNo: { type: integer, minimum: 1 }
+        sourceLocale: { $ref: '#/components/schemas/SupportedLocale' }
+        status: { enum: [DRAFT, IN_REVIEW, APPROVED, PUBLISHED, SUPERSEDED] }
+        structureChecksum: { type: [string, 'null'] }
+        blocks:
+          type: array
+          items:
+            type: object
+            required: [id, blockKey, blockType, sortOrder, layout, shared]
+            properties:
+              id: { type: string, format: uuid }
+              blockKey: { type: string }
+              blockType: { enum: [HERO, TEXT, IMAGE, VIDEO, METRIC, GALLERY, DOCUMENT, CASE_CARD] }
+              sortOrder: { type: integer }
+              layout: { type: object, additionalProperties: true }
+              shared: { type: object, additionalProperties: true }
+        rowVersion: { type: integer, minimum: 1 }
+    ContentBlockInput:
+      type: object
+      required: [blockKey, blockType, sortOrder, layout, shared, media]
+      properties:
+        id: { type: [string, 'null'], format: uuid }
+        blockKey: { type: string }
+        blockType: { enum: [HERO, TEXT, IMAGE, VIDEO, METRIC, GALLERY, DOCUMENT, CASE_CARD] }
+        sortOrder: { type: integer }
+        layout: { type: object, additionalProperties: true }
+        shared: { type: object, additionalProperties: true }
+        media:
+          type: array
+          items:
+            type: object
+            required: [mediaAssetId, mediaRole, localeScope, sortOrder]
+            properties:
+              mediaAssetId: { type: string, format: uuid }
+              mediaRole: { type: string }
+              localeScope: { enum: ['*', zh-CN, en, ru, uk] }
+              sortOrder: { type: integer }
+              focalPointX: { type: [number, 'null'], minimum: 0, maximum: 1 }
+              focalPointY: { type: [number, 'null'], minimum: 0, maximum: 1 }
+    ContentTranslationInput:
+      type: object
+      required: [pageTitle, translationMethod, blocks, rowVersion]
+      properties:
+        pageTitle: { type: string }
+        pageSummary: { type: [string, 'null'] }
+        translationMethod: { enum: [SOURCE, HUMAN, LLM_DRAFT, IMPORT] }
+        sourceContentChecksum: { type: [string, 'null'] }
+        blocks:
+          type: array
+          items:
+            type: object
+            required: [blockId]
+            properties:
+              blockId: { type: string, format: uuid }
+              heading: { type: [string, 'null'] }
+              body: { type: object, additionalProperties: true }
+              actionLabel: { type: [string, 'null'] }
+              accessibility: { type: object, additionalProperties: true }
+        rowVersion: { type: integer, minimum: 1 }
+    ContentTranslation:
+      allOf:
+        - $ref: '#/components/schemas/ContentTranslationInput'
+        - type: object
+          required: [id, revisionId, locale, status]
+          properties:
+            id: { type: string, format: uuid }
+            revisionId: { type: string, format: uuid }
+            locale: { $ref: '#/components/schemas/SupportedLocale' }
+            status: { $ref: '#/components/schemas/ContentTranslationStatus' }
+            translationChecksum: { type: [string, 'null'] }
+    CreateMediaAssetRequest:
+      type: object
+      required: [assetCode, mediaType, originalFileName, originalStorageUri, mimeType, checksum, sizeBytes]
+      properties:
+        assetCode: { type: string }
+        mediaType: { enum: [IMAGE, VIDEO, DOCUMENT] }
+        originalFileName: { type: string }
+        originalStorageUri: { type: string }
+        mimeType: { type: string }
+        checksum: { type: string }
+        sizeBytes: { type: integer, minimum: 0 }
+        rightsStatus: { enum: [INTERNAL, LICENSED, CUSTOMER_AUTHORIZED, RESTRICTED, EXPIRED], default: INTERNAL }
+        rightsOwner: { type: [string, 'null'] }
+        rightsExpiresAt: { type: [string, 'null'], format: date-time }
+    MediaAsset:
+      allOf:
+        - $ref: '#/components/schemas/CreateMediaAssetRequest'
+        - type: object
+          required: [id, active, variants]
+          properties:
+            id: { type: string, format: uuid }
+            active: { type: boolean }
+            variants:
+              type: array
+              items:
+                type: object
+                required: [variantCode, format, storageUri, checksum, processingStatus]
+                properties:
+                  variantCode: { type: string }
+                  format: { type: string }
+                  storageUri: { type: string }
+                  checksum: { type: string }
+                  widthPx: { type: [integer, 'null'] }
+                  heightPx: { type: [integer, 'null'] }
+                  processingStatus: { enum: [PENDING, READY, FAILED] }
+    SalesContentRelease:
+      type: object
+      required: [id, releaseNumber, collectionId, channel, status, locales, manifest, manifestChecksum]
+      properties:
+        id: { type: string, format: uuid }
+        releaseNumber: { type: string }
+        collectionId: { type: string, format: uuid }
+        channel: { type: string }
+        status: { enum: [DRAFT, SCHEDULED, PUBLISHED, SUPERSEDED, ROLLED_BACK, FAILED] }
+        locales:
+          type: array
+          items: { $ref: '#/components/schemas/SupportedLocale' }
+        manifest: { type: object, additionalProperties: true }
+        manifestChecksum: { type: string }
+        publishedAt: { type: [string, 'null'], format: date-time }
+    SalesAnswerInput:
+      type: object
+      required: [questionId, known, sourceType]
+      properties:
+        questionId: { type: string, format: uuid }
+        value: true
+        originalText: { type: [string, 'null'] }
+        originalUnit: { type: [string, 'null'] }
+        known: { type: boolean }
+        sourceType: { enum: [CUSTOMER, SALES_ESTIMATE, TESTWORK, SITE_SURVEY, DOCUMENT] }
+        confidence: { type: [number, 'null'], minimum: 0, maximum: 1 }
+    SalesConsultation:
+      type: object
+      required: [id, sessionNumber, projectId, questionnaireVersionId, status, locale, timeZone, rowVersion]
+      properties:
+        id: { type: string, format: uuid }
+        sessionNumber: { type: string }
+        projectId: { type: string, format: uuid }
+        questionnaireVersionId: { type: string, format: uuid }
+        requirementVersionId: { type: [string, 'null'], format: uuid }
+        contentReleaseId: { type: [string, 'null'], format: uuid }
+        status: { enum: [DRAFT, IN_PROGRESS, ANSWERS_COMPLETE, RECOMMENDING, PROPOSAL_READY, SUBMITTED_TO_ENGINEERING, CLOSED, CANCELLED] }
+        locale: { $ref: '#/components/schemas/SupportedLocale' }
+        timeZone: { type: string, description: IANA time zone identifier }
+        completenessScore: { type: [number, 'null'], minimum: 0, maximum: 1 }
+        rowVersion: { type: integer, minimum: 1 }
+    CreateProjectRequest:
+      type: object
+      required: [projectName, siteTimeZone]
+      properties:
+        projectName: { type: string }
+        customerDisplayName: { type: [string, 'null'] }
+        countryCode: { type: [string, 'null'] }
+        region: { type: [string, 'null'] }
+        siteTimeZone: { type: string, description: IANA time zone identifier for the mine/site }
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/CreateProjectRequest'
+        - type: object
+          required: [id, projectCode, status, createdAt]
+          properties:
+            id: { type: string, format: uuid }
+            projectCode: { type: string }
+            status: { type: string }
+            createdAt: { type: string, format: date-time }
+    RequirementPayload:
+      type: object
+      properties:
+        designBasis:
+          type: object
+          properties:
+            throughputTpd: { type: [number, 'null'], exclusiveMinimum: 0 }
+            operatingHoursPerDay: { type: [number, 'null'], exclusiveMinimum: 0, maximum: 24 }
+            availabilityPct: { type: [number, 'null'], exclusiveMinimum: 0, maximum: 100 }
+            designMarginPct: { type: [number, 'null'], minimum: 0 }
+            linesCount: { type: [integer, 'null'], minimum: 1 }
+        oreProfile:
+          type: object
+          additionalProperties: true
+        siteCondition:
+          type: object
+          additionalProperties: true
+        logisticsCondition:
+          type: object
+          additionalProperties: true
+        processObjectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcessObjective'
+    ProcessObjective:
+      type: object
+      required: [type, priority, mandatory]
+      properties:
+        type: { type: string }
+        targetValue: { type: [number, 'null'] }
+        targetText: { type: [string, 'null'] }
+        unitCode: { type: [string, 'null'] }
+        priority: { type: integer, minimum: 0, maximum: 100 }
+        mandatory: { type: boolean }
+    RequirementVersion:
+      type: object
+      required: [id, projectId, versionNo, status, rowVersion, payload]
+      properties:
+        id: { type: string, format: uuid }
+        projectId: { type: string, format: uuid }
+        versionNo: { type: integer, minimum: 1 }
+        status: { enum: [DRAFT, VALIDATING, READY, SNAPSHOTTED, SUPERSEDED] }
+        rowVersion: { type: integer, minimum: 1 }
+        completenessScore: { type: [number, 'null'], minimum: 0, maximum: 1 }
+        payload: { $ref: '#/components/schemas/RequirementPayload' }
+    InputSnapshot:
+      type: object
+      required: [id, requirementVersionId, schemaVersion, checksum, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        requirementVersionId: { type: string, format: uuid }
+        schemaVersion: { type: integer }
+        checksum: { type: string }
+        createdAt: { type: string, format: date-time }
+    RecommendationRun:
+      type: object
+      required: [id, runNumber, inputSnapshotId, status, algorithmVersion, requestedAt]
+      properties:
+        id: { type: string, format: uuid }
+        runNumber: { type: string }
+        inputSnapshotId: { type: string, format: uuid }
+        status: { enum: [QUEUED, RUNNING, SUCCEEDED, FAILED, CANCELLED] }
+        currentStage: { type: [string, 'null'] }
+        progressPct: { type: number, minimum: 0, maximum: 100 }
+        algorithmVersion: { type: string }
+        ruleSetVersion: { type: string }
+        requestedAt: { type: string, format: date-time }
+        failure:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ApiError'
+    CandidateSolutionSummary:
+      type: object
+      required: [id, scenarioCode, title, technicalStatus, rank, score]
+      properties:
+        id: { type: string, format: uuid }
+        scenarioCode: { type: string }
+        title: { type: string }
+        technicalStatus: { type: string }
+        rank: { type: integer }
+        score: { type: number }
+        evidenceCoverage: { type: number, minimum: 0, maximum: 1 }
+        warningCount: { type: integer, minimum: 0 }
+    CandidateSolution:
+      allOf:
+        - $ref: '#/components/schemas/CandidateSolutionSummary'
+        - type: object
+          required: [flowsheet, equipmentOptions, scoreComponents, explanations]
+          properties:
+            flowsheet: { $ref: '#/components/schemas/Flowsheet' }
+            equipmentOptions:
+              type: array
+              items: { $ref: '#/components/schemas/EquipmentOption' }
+            scoreComponents:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+            explanations:
+              type: object
+              additionalProperties: true
+            assumptions:
+              type: array
+              items: { type: string }
+            warnings:
+              type: array
+              items: { $ref: '#/components/schemas/ValidationIssue' }
+    Flowsheet:
+      type: object
+      required: [nodes, edges]
+      properties:
+        nodes:
+          type: array
+          items: { $ref: '#/components/schemas/FlowsheetNode' }
+        edges:
+          type: array
+          items: { $ref: '#/components/schemas/FlowsheetEdge' }
+    FlowsheetNode:
+      type: object
+      required: [id, code, operationTypeCode, position, narrative]
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        operationTypeCode: { type: string }
+        purposeCode: { type: [string, 'null'] }
+        parameters: { type: object, additionalProperties: true }
+        narrative: { type: string }
+        designDryTph: { type: [number, 'null'] }
+        designWaterM3h: { type: [number, 'null'] }
+        position:
+          type: object
+          required: [x, y]
+          properties:
+            x: { type: number }
+            y: { type: number }
+    FlowsheetEdge:
+      type: object
+      required: [id, fromNodeId, toNodeId, fromPort, toPort, streamRole, recycle]
+      properties:
+        id: { type: string, format: uuid }
+        fromNodeId: { type: string, format: uuid }
+        toNodeId: { type: string, format: uuid }
+        fromPort: { type: string }
+        toPort: { type: string }
+        streamRole: { type: string }
+        dryTph: { type: [number, 'null'] }
+        waterM3h: { type: [number, 'null'] }
+        solidsPct: { type: [number, 'null'], minimum: 0, maximum: 100 }
+        p80Mm: { type: [number, 'null'] }
+        topSizeMm: { type: [number, 'null'] }
+        recycle: { type: boolean }
+        properties: { type: object, additionalProperties: true }
+    EquipmentSelection:
+      type: object
+      required: [id, nodeId, specVersionId, quantityTotal, quantityDuty, quantityStandby, selectionReason]
+      properties:
+        id: { type: string, format: uuid }
+        nodeId: { type: string, format: uuid }
+        specVersionId: { type: string, format: uuid }
+        quantityTotal: { type: integer, minimum: 1 }
+        quantityDuty: { type: integer, minimum: 0 }
+        quantityStandby: { type: integer, minimum: 0 }
+        requiredCapacityTph: { type: [number, 'null'] }
+        effectiveCapacityPerUnitTph: { type: [number, 'null'] }
+        capacityMarginPct: { type: [number, 'null'] }
+        selectionReason: { type: string }
+        overrideReason: { type: [string, 'null'] }
+    EquipmentOption:
+      type: object
+      required: [id, nodeId, specVersionId, rank, fitStatus, selectionReason]
+      properties:
+        id: { type: string, format: uuid }
+        nodeId: { type: string, format: uuid }
+        specVersionId: { type: string, format: uuid }
+        rank: { type: integer, minimum: 1 }
+        fitStatus: { enum: [PASS, WARN, ENGINEERING_CONFIRMATION_REQUIRED, REJECT] }
+        score: { type: [number, 'null'] }
+        defaultQuantityTotal: { type: [integer, 'null'], minimum: 1 }
+        defaultQuantityDuty: { type: [integer, 'null'], minimum: 0 }
+        defaultQuantityStandby: { type: [integer, 'null'], minimum: 0 }
+        selectionReason: { type: string }
+        warnings:
+          type: array
+          items: { $ref: '#/components/schemas/ValidationIssue' }
+    SalesProposalRevision:
+      type: object
+      required: [id, proposalId, revisionNo, status, rowVersion, flowsheet, equipmentOptions, equipmentSelections]
+      properties:
+        id: { type: string, format: uuid }
+        proposalId: { type: string, format: uuid }
+        revisionNo: { type: integer, minimum: 1 }
+        status: { enum: [SALES_DRAFT, READY_FOR_CUSTOMER, SUBMITTED_TO_ENGINEERING, ACCEPTED_BY_ENGINEERING, SUPERSEDED, CANCELLED] }
+        rowVersion: { type: integer, minimum: 1 }
+        title: { type: string }
+        customerPreferences: { type: object, additionalProperties: true }
+        flowsheet: { $ref: '#/components/schemas/Flowsheet' }
+        equipmentOptions:
+          type: array
+          items: { $ref: '#/components/schemas/EquipmentOption' }
+        equipmentSelections:
+          type: array
+          items: { $ref: '#/components/schemas/EquipmentSelection' }
+        validationIssues:
+          type: array
+          items: { $ref: '#/components/schemas/ValidationIssue' }
+    CustomerHandout:
+      type: object
+      required: [id, handoutNumber, proposalRevisionId, type, status, locale, timeZone, disclaimer, manifest]
+      properties:
+        id: { type: string, format: uuid }
+        handoutNumber: { type: string }
+        proposalRevisionId: { type: string, format: uuid }
+        type: { enum: [PRELIMINARY] }
+        status: { enum: [GENERATING, PENDING_REVIEW, APPROVED_FOR_DELIVERY, REJECTED, FAILED, SUPERSEDED] }
+        locale: { $ref: '#/components/schemas/SupportedLocale' }
+        timeZone: { type: string, description: IANA time zone identifier used for display }
+        disclaimer: { type: string }
+        manifest: { type: object, additionalProperties: true }
+        files:
+          type: array
+          items:
+            type: object
+            required: [format, fileName, contentType, downloadUrl]
+            properties:
+              format: { enum: [PDF, DOCX] }
+              fileName: { type: string }
+              contentType: { type: string }
+              downloadUrl: { type: string, format: uri }
+    CustomerHandoutReview:
+      type: object
+      required: [id, customerHandoutId, status, requestedBy, requestedAt]
+      properties:
+        id: { type: string, format: uuid }
+        customerHandoutId: { type: string, format: uuid }
+        status: { enum: [PENDING, APPROVED, REJECTED, CANCELLED] }
+        requestedBy: { type: string, format: uuid }
+        requestedAt: { type: string, format: date-time }
+        assignedReviewerId: { type: [string, 'null'], format: uuid }
+        reviewerId: { type: [string, 'null'], format: uuid }
+        reviewedAt: { type: [string, 'null'], format: date-time }
+        decisionReason: { type: [string, 'null'] }
+        reviewedManifestChecksum: { type: [string, 'null'] }
+    SolutionRevision:
+      type: object
+      required: [id, solutionId, revisionNo, status, rowVersion, flowsheet, equipmentSelections]
+      properties:
+        id: { type: string, format: uuid }
+        solutionId: { type: string, format: uuid }
+        revisionNo: { type: integer, minimum: 1 }
+        status: { enum: [ENGINEERING_DRAFT, VALIDATING, REVIEW_REQUIRED, APPROVED, RELEASED, SUPERSEDED, WITHDRAWN] }
+        rowVersion: { type: integer, minimum: 1 }
+        title: { type: string }
+        summary: { type: [string, 'null'] }
+        flowsheet: { $ref: '#/components/schemas/Flowsheet' }
+        equipmentSelections:
+          type: array
+          items: { $ref: '#/components/schemas/EquipmentSelection' }
+        validationIssues:
+          type: array
+          items: { $ref: '#/components/schemas/ValidationIssue' }
+    ValidationIssue:
+      type: object
+      required: [severity, code, message]
+      properties:
+        severity: { enum: [BLOCKER, MAJOR, MINOR, INFO] }
+        code: { type: string }
+        ruleCode: { type: [string, 'null'] }
+        path: { type: [string, 'null'] }
+        message: { type: string }
+        evidence: { type: object, additionalProperties: true }
+    ValidationResult:
+      type: object
+      required: [valid, issues]
+      properties:
+        valid: { type: boolean }
+        completenessScore: { type: [number, 'null'], minimum: 0, maximum: 1 }
+        issues:
+          type: array
+          items: { $ref: '#/components/schemas/ValidationIssue' }
+    ReviewRequest:
+      type: object
+      required: [id, revisionId, status, submittedAt]
+      properties:
+        id: { type: string, format: uuid }
+        revisionId: { type: string, format: uuid }
+        status: { enum: [OPEN, APPROVED, CHANGES_REQUESTED, CANCELLED] }
+        submittedAt: { type: string, format: date-time }
+    ReleasePackage:
+      type: object
+      required: [id, releaseNumber, revisionId, status, manifest, publishedAt]
+      properties:
+        id: { type: string, format: uuid }
+        releaseNumber: { type: string }
+        revisionId: { type: string, format: uuid }
+        status: { enum: [GENERATING, RELEASED, SUPERSEDED, WITHDRAWN] }
+        manifest: { type: object, additionalProperties: true }
+        publishedAt: { type: string, format: date-time }
+        files:
+          type: array
+          items:
+            type: object
+            required: [format, fileName, contentType, downloadUrl]
+            properties:
+              format: { enum: [PDF, DOCX] }
+              fileName: { type: string }
+              contentType: { type: string }
+              downloadUrl: { type: string, format: uri }
+    LlmRun:
+      type: object
+      required: [id, purpose, provider, modelId, promptTemplateCode, promptTemplateVersion, inputChecksum, status, requestedAt]
+      properties:
+        id: { type: string, format: uuid }
+        projectId: { type: [string, 'null'], format: uuid }
+        purpose: { enum: [DOCUMENT_EXTRACTION, FIELD_MAPPING, TRANSLATION_DRAFT, NARRATIVE_DRAFT, CANDIDATE_SUGGESTION] }
+        provider: { type: string }
+        modelId: { type: string }
+        promptTemplateCode: { type: string }
+        promptTemplateVersion: { type: string }
+        inputChecksum: { type: string }
+        status: { enum: [QUEUED, RUNNING, SUCCEEDED, FAILED, BLOCKED_BY_POLICY, CANCELLED] }
+        inputTokens: { type: [integer, 'null'], minimum: 0 }
+        outputTokens: { type: [integer, 'null'], minimum: 0 }
+        estimatedCost: { type: [number, 'null'], minimum: 0 }
+        humanDisposition: { enum: [ACCEPTED, MODIFIED, REJECTED, null] }
+        requestedAt: { type: string, format: date-time }
+    DataChangeRequestInput:
+      type: object
+      required: [changeType, entityType, reason, items]
+      properties:
+        changeType: { type: string }
+        entityType: { type: string }
+        entityId: { type: [string, 'null'], format: uuid }
+        reason: { type: string }
+        sourceDocumentId: { type: [string, 'null'], format: uuid }
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [fieldPath, proposedValue]
+            properties:
+              fieldPath: { type: string }
+              oldValue: true
+              proposedValue: true
+              originalUnit: { type: [string, 'null'] }
+              normalizedUnit: { type: [string, 'null'] }
+    DataChangeRequest:
+      allOf:
+        - $ref: '#/components/schemas/DataChangeRequestInput'
+        - type: object
+          required: [id, changeNumber, status, createdAt]
+          properties:
+            id: { type: string, format: uuid }
+            changeNumber: { type: string }
+            status: { enum: [DRAFT, VALIDATING, REVIEW_REQUIRED, APPROVED, PUBLISHED, SUPERSEDED, RETIRED] }
+            createdAt: { type: string, format: date-time }
+    ApiError:
+      type: object
+      required: [code, message, traceId]
+      properties:
+        code: { type: string }
+        message: { type: string }
+        details:
+          type: array
+          items: { type: object, additionalProperties: true }
+        traceId: { type: string }

@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="business">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales Platform · 销售平台设计评审</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :where(.grid, .flex, .layout-grid, .layout-flex) > *,
+    :where([style*="display: grid"], [style*="display:grid"], [style*="display: flex"], [style*="display:flex"]) > * { min-width: 0; }
+    :where(p, h1, h2, h3, h4, h5, h6, li, dd, blockquote, figcaption, td, th, .badge, .label) { overflow-wrap: anywhere; }
+    :where(img, svg, video, canvas, iframe) { max-width: 100%; height: auto; }
+    body { background: radial-gradient(circle at 20% 0%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 36%), var(--color-base-200); }
+    .review-shell { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+    .section-kicker { letter-spacing: .16em; text-transform: uppercase; font-size: .72rem; font-weight: 800; color: var(--color-primary); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .mermaid { min-width: 0; overflow-x: auto; }
+    .mermaid svg { min-width: 760px; margin-inline: auto; }
+    .doc-path { white-space: normal; word-break: break-word; }
+    .risk-stripe { border-left: .28rem solid var(--color-warning); }
+    .decision-stripe { border-left: .28rem solid var(--color-primary); }
+    h1, h2, h3 { line-height: 1.2 !important; padding-block: .06em .12em; }
+    .alert, .card-body, .collapse-content { line-height: 1.55; }
+    .divider { min-height: 1.8rem; height: auto; line-height: 1.4; padding-block: .2rem; }
+    @media (max-width: 760px) {
+      .review-shell { width: min(100% - 1rem, 1180px); }
+      .mermaid svg { min-width: 680px; }
+    }
+  </style>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        primaryColor: "#183a45",
+        primaryTextColor: "#f7fbfc",
+        primaryBorderColor: "#57c3a3",
+        lineColor: "#7fa8b2",
+        secondaryColor: "#233b45",
+        tertiaryColor: "#121d23",
+        background: "#0f171c",
+        mainBkg: "#183a45",
+        nodeBorder: "#57c3a3",
+        clusterBkg: "#18252c",
+        clusterBorder: "#4b6873",
+        edgeLabelBackground: "#18252c",
+        fontFamily: "Inter, system-ui, sans-serif"
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="border-b border-base-content/10 bg-base-100/80 backdrop-blur sticky top-0 z-20">
+    <div class="review-shell navbar px-0">
+      <div class="navbar-start gap-3">
+        <div class="size-10 rounded-box bg-primary text-primary-content grid place-items-center font-black">SP</div>
+        <div>
+          <div class="font-bold leading-tight">Sales Platform</div>
+          <div class="text-xs opacity-60">设计评审面 · 2026-08-28</div>
+        </div>
+      </div>
+      <div class="navbar-end gap-2">
+        <span class="badge badge-warning badge-soft">Draft</span>
+        <span class="badge badge-info badge-soft">MySQL 基线已切换</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="review-shell py-8 lg:py-12 space-y-8">
+    <section class="hero rounded-box bg-base-100 border border-base-content/10 shadow-xl overflow-hidden">
+      <div class="hero-content w-full items-stretch flex-col lg:flex-row gap-8 py-10 lg:py-14">
+        <div class="flex-1 space-y-5">
+          <div class="section-kicker">Design baseline</div>
+          <h1 class="text-4xl lg:text-6xl font-black tracking-tight">把销售初筛，变成可审核的工程方案。</h1>
+          <p class="text-lg lg:text-xl opacity-75 max-w-3xl">独立 Sales Platform 完成企业展示、客户问诊、候选工艺、逐段多设备选择和初步打印；由获得专用权限的人员审核后可现场交付，完整记录再回传工艺工程师优化并形成正式方案。</p>
+          <div class="alert alert-warning alert-soft risk-stripe" role="alert">
+            <div>
+              <div class="font-bold">设计门禁</div>
+              <div class="text-sm opacity-80">算法候选不是正式设计。未经工艺审核的流程、设备、规则和 AI 提取结果，不能进入正式销售发布。</div>
+            </div>
+          </div>
+        </div>
+        <div class="stats stats-vertical shadow bg-base-200 min-w-[250px]">
+          <div class="stat"><div class="stat-title">设计文档</div><div class="stat-value text-primary">34</div><div class="stat-desc">Markdown + ADR</div></div>
+          <div class="stat"><div class="stat-title">数据库表</div><div class="stat-value text-secondary">83</div><div class="stat-desc">MySQL 设计基线</div></div>
+          <div class="stat"><div class="stat-title">机器契约</div><div class="stat-value text-accent">3</div><div class="stat-desc">SQL / OpenAPI / AsyncAPI</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Multilingual content management</div>
+          <h2 class="card-title text-3xl mt-2">第一部分像网站，但改字换图不需要重新发 Electron</h2>
+          <p class="opacity-70 mt-2">推荐使用 Sales Platform 内置的结构化 CMS：一份页面结构、四套独立译文、一个可复用媒体库，以及可审核/回滚的不可变 ContentRelease。</p>
+        </div>
+        <div class="mermaid">
+flowchart TD
+  E["内容编辑器\n页面树 + 固定区块"] --> R["页面 Revision\n语言无关结构"]
+  R --> T["四语言矩阵\nzh-CN / en / ru / uk"]
+  M["媒体库\n原图 + checksum + 权利"] --> V["响应式 Variant\nAVIF / WebP / JPEG"]
+  V --> R
+  T --> Q{"语言与客户安全审核"}
+  Q -->|"通过"| P["ContentRelease\n冻结 manifest + ETag"]
+  Q -->|"退回"| T
+  P --> W["React Web"]
+  P --> D["Electron\n完整下载校验后原子切换"]
+  D --> O["离线使用上一已验证 Release"]
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-primary">Structure</span><h3 class="card-title">结构只维护一次</h3><p>Hero、图文、Gallery、指标、产品卡片等白名单区块共享排序与布局，避免四套页面漂移。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-info">Translation</span><h3 class="card-title">译文按字段追踪</h3><p>源文字变化只把相关译文标成 STALE；LLM 可起草，中文/英文/俄文/乌克兰文分别审核。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-secondary">Media</span><h3 class="card-title">图片集中复用</h3><p>对象存储保存原图，多尺寸自动生成；记录焦点、版权、客户授权和到期时间，含文字图片可按语言覆盖。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-success">Release</span><h3 class="card-title">发布完整内容包</h3><p>整包 checksum/ETag 更新，失败继续上一版；历史客户会谈固定当时 release，不被后来改图改字影响。</p></div></article>
+        </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>变更类型</th><th>维护入口</th><th>是否重新发布 Electron</th><th>发布门禁</th></tr></thead>
+            <tbody>
+              <tr><td>修改介绍文字、翻译、按钮</td><td>内容管理中心</td><td><span class="badge badge-success badge-soft">不需要</span></td><td>目标语言审核 + 预览</td></tr>
+              <tr><td>更换图片、排序、裁切焦点</td><td>媒体库 / 区块编辑器</td><td><span class="badge badge-success badge-soft">不需要</span></td><td>媒体扫描、权利、variant、alt text</td></tr>
+              <tr><td>增加已有模板的页面/区块</td><td>页面树 / 区块编辑器</td><td><span class="badge badge-success badge-soft">不需要</span></td><td>结构 + 四语言 + 客户安全</td></tr>
+              <tr><td>新增一种渲染组件或桌面能力</td><td>前端代码仓库</td><td><span class="badge badge-warning badge-soft">需要</span></td><td>代码测试、签名、Windows/macOS 发布</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Sales dashboard journey</div>
+          <h2 class="card-title text-3xl mt-2">销售看板：从企业展示到工程回传</h2>
+          <p class="opacity-70 mt-2">同一个客户会谈里完成介绍、问诊、推荐、设备选择和初步打印；工程师收到的是完整结构化记录，不是一张失去上下文的 PDF。</p>
+        </div>
+        <div class="mermaid">
+flowchart LR
+  A["企业展示\n公司 / 乌兹别克子公司\n生产 / 产品能力"] --> B["客户问诊\n矿山 / 矿石 / 粒度\n产能 / 水电 / 道路"]
+  B --> C["候选工艺\n多个可解释场景"]
+  C --> D["逐段设备比较\n型号 / 数量 / 运行备用"]
+  D --> E["冻结待审打印件\nPDF / DOCX"]
+  E --> R{"具备 customer.handout.review\n权限的人员审核"}
+  R -->|"通过"| H["客户现场带走\n流程图 + 设备列表"]
+  R -->|"退回"| D
+  D --> F["提交工艺工程师\n问答 + 差异 + 客户偏好"]
+  F --> G["工程优化 / 审核\n正式方案回传"]
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-primary">01 · Present</span><h3 class="card-title">客户演示模式</h3><p>只显示已发布、customer-safe 的内容；隐藏内部评分、规则、成本和其他客户。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-info">02 · Consult</span><h3 class="card-title">引导式问诊</h3><p>保存客户原话、原单位、未知/估计和证据，再映射到标准需求字段。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-secondary">03 · Configure</span><h3 class="card-title">多设备选择</h3><p>每个工艺段 1–N 个备选；销售切换型号和数量时实时重新校核。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-warning">04 · Handoff</span><h3 class="card-title">权限审核后交付</h3><p>审核资格来自专用权限，不来自岗位名称；初步件交付后，工程师再深化正式方案。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Core lifecycle</div>
+          <h2 class="card-title text-3xl mt-2">一次客户会谈，四层版本</h2>
+          <p class="opacity-70 mt-2">算法原稿、销售现场方案、工程工作副本、正式发布互不覆盖。</p>
+        </div>
+        <div class="mermaid">
+flowchart LR
+  A["销售需求\nInput Snapshot"] --> B["算法候选\nCandidate Solution"]
+  B -->|"销售选择/调整设备"| S["销售方案修订\nSales Proposal Revision"]
+  S -->|"冻结 manifest"| P["初步文件\nPENDING_REVIEW"]
+  P -->|"权限审核通过"| H["客户初步方案\nAPPROVED_FOR_DELIVERY"]
+  S -->|"提交工程"| C["工程修订\nSolution Revision"]
+  C -->|"工艺工程师优化"| C
+  C -->|"提交"| D{"工程审核"}
+  D -->|"退回"| C
+  D -->|"批准"| E["正式发布包\nRelease Package"]
+  E --> F["Sales Platform\n正式流程说明 + 分段设备"]
+  classDef core fill:#183a45,stroke:#57c3a3,color:#f7fbfc,stroke-width:2px;
+  classDef gate fill:#6d4f17,stroke:#f4c75b,color:#fff8dc,stroke-width:2px;
+  class A,B,S,P,H,C,E,F core;
+  class D gate;
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-info">1 · Algorithm</span><h3 class="card-title">算法候选</h3><p>固定输入、规则、设备目录、案例库和算法版本。只追加，不因后续编辑变化。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-secondary">2 · Sales</span><h3 class="card-title">销售方案</h3><p>逐段比较多个设备，调整型号和数量；可打印带免责声明的初步方案。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-warning">3 · Engineering</span><h3 class="card-title">工程修订</h3><p>工程师可增删节点、调整物流、替换设备、写说明；所有偏离和覆盖理由留痕。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-success">4 · Release</span><h3 class="card-title">正式发布</h3><p>从批准修订冻结 manifest，统一生成客户用 PDF/DOCX；JSON 仅作为内部数据契约，不作为打印交付物。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Architecture</div>
+          <h2 class="card-title text-3xl mt-2">Sales Platform 独立运行，BMS 同时提供身份入口与内部控制面</h2>
+          <p class="opacity-70 mt-2">平台不属于 BMS 或 CRM，也不要求关联既有销售项目。客户/工程工作台在独立 Sales Platform；BMS 通过 BFF 展示管理投影和执行已授权动作，不复制领域数据。平台后端最终部署位置仍待确认。</p>
+        </div>
+        <div class="mermaid">
+flowchart TB
+  BMS["BMS Auth / Permission Broker\n登录入口 + 外部 subject + permission claims"]
+  subgraph Clients["独立 Sales Platform 交互层"]
+    Web["React Web UI\n独立前端仓库"]
+    Electron["Electron\nWindows + macOS 同批发布"]
+  end
+  subgraph Runtime["Node.js / TypeScript"]
+    API["模块化单体 API\nNestJS + Fastify"]
+    Worker["Worker\n推荐 / 导入 / 报告"]
+    Outbox["事务 Outbox"]
+  end
+  subgraph Data["数据层"]
+    PG[("MySQL @ 121\n新 schema + 表前缀")]
+    Redis[("Redis / BullMQ\n可重建任务队列")]
+    S3[("S3 / MinIO\n证据与报告")]
+  end
+  BMS -->|"认证/权限上下文"| Web
+  BMS -->|"认证/权限上下文"| Electron
+  Web --> API
+  Electron --> API
+  API --> PG
+  API --> S3
+  API --> Outbox
+  Outbox --> Worker
+  Worker --> Redis
+  Worker --> PG
+  Worker --> S3
+        </div>
+        <div class="grid lg:grid-cols-2 gap-4">
+          <div class="alert alert-success alert-soft"><div><strong>选择：模块化单体 + Worker</strong><br><span class="text-sm">版本/审核/发布保持强事务；长任务异步。等负载或团队边界成熟后再拆服务。</span></div></div>
+          <div class="alert alert-info alert-soft"><div><strong>选择：MySQL 图持久化</strong><br><span class="text-sm">节点/边表表达有向多重图；运行时加载 Graphology。暂不为流程图引入主图数据库。</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">BMS internal control plane</div>
+          <h2 class="card-title text-3xl mt-2">BMS 里面放“管理中心”，不放第二套 Sales Platform 数据库</h2>
+          <p class="opacity-70 mt-2">员工在 BMS 完成内容、翻译、数据维护、审核与发布、项目/工程记录和权限管理；所有领域事实仍由 Sales Platform Admin API 和 121 独立 schema 管理。</p>
+        </div>
+        <div class="mermaid">
+flowchart LR
+  U["内部用户"] --> V["BMS Vue\nSales Platform 管理中心"]
+  V --> B["BMS Backend\nBFF + 权限检查"]
+  B --> A["Sales Platform\nAdmin API"]
+  A --> M[("MySQL @ 121\n唯一业务事实源")]
+  A --> O[("对象存储\n媒体 / 来源 / PDF / DOCX")]
+  B -. "只保存菜单 / 权限映射 / 集成配置" .-> D[("BMS DB")]
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-soft">01</span><h3 class="font-bold">管理总览</h3><p class="text-sm opacity-70">待办、质量、过期、发布和失败任务。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-info badge-soft">02</span><h3 class="font-bold">内容与翻译</h3><p class="text-sm opacity-70">页面、图片、四语言、预览和 ContentRelease。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-secondary badge-soft">03</span><h3 class="font-bold">数据中心</h3><p class="text-sm opacity-70">设备、案例、规则、字典、来源和质量。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-warning badge-soft">04</span><h3 class="font-bold">审核与发布</h3><p class="text-sm opacity-70">按权限聚合待办；预览、批准、排期和回滚。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-success badge-soft">05</span><h3 class="font-bold">项目与工程记录</h3><p class="text-sm opacity-70">项目/推荐只读、工程交接和方案状态；审计证据进入详情历史。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-neutral badge-soft">06</span><h3 class="font-bold">权限</h3><p class="text-sm opacity-70">页面、按钮、人员/角色和数据范围映射。</p></div></article>
+        </div>
+        <div class="alert alert-warning alert-soft"><div><strong>强制路由规则</strong><br><span class="text-sm">所有新增 BMS 页面（包括表格/列表页）必须在“菜单管理”配置，由 <code>/permission/getUserPromissions</code> 动态生成菜单和路由；页面组件放在 <code>src/views/...</code>，禁止写入 <code>src/store/modules/routes.ts</code>、<code>src/router/index.ts</code> 或新增 legacy <code>inject*</code>。按钮能力配置为“权限”子项并精确匹配 <code>functionCode</code>。</span></div></div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>展示层</th><th>给谁看</th><th>展示内容</th><th>为什么这样做</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-success badge-soft">默认摘要</span></td><td>所有获得页面权限的人</td><td>状态、版本、Owner、质量、新鲜度、更新时间、待办</td><td>快速完成工作，不让 83 张表变成一张巨型表格</td></tr>
+              <tr><td><span class="badge badge-info badge-soft">结构化详情</span></td><td>获得资源范围权限的人</td><td>当前数据、版本、翻译/媒体、来源、影响、审核、审计</td><td>完整可追溯，但按业务语义组织</td></tr>
+              <tr><td><span class="badge badge-warning badge-soft">高级原始视图</span></td><td>数据维护人/专家/审计</td><td>原始 JSON、导入行、checksum、reason code、技术日志摘要</td><td>满足排错和证据需要，复制/导出需额外授权</td></tr>
+              <tr><td><span class="badge badge-error badge-soft">禁止展示</span></td><td>任何普通页面</td><td>密码、JWT、API Key、数据库凭据、未授权客户资料、模型密钥</td><td>“可查看全部业务事实”不等于泄露秘密</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-4">
+          <div class="alert alert-success alert-soft"><div><strong>在 BMS 维护</strong><br><span class="text-sm">页面图文、四语言、媒体、设备/案例/规则变更、合并后的审核与发布、项目/工程记录和权限。</span></div></div>
+          <div class="alert alert-info alert-soft"><div><strong>留在独立平台</strong><br><span class="text-sm">客户演示、问诊、逐段设备比较、推荐解释、流程图深度编辑和工程说明工作台。</span></div></div>
+        </div>
+        <div class="mermaid">
+stateDiagram-v2
+  [*] --> DRAFT
+  DRAFT --> VALIDATING: 提交
+  VALIDATING --> DRAFT: 校验失败
+  VALIDATING --> REVIEW_REQUIRED: 校验通过
+  REVIEW_REQUIRED --> DRAFT: 退回
+  REVIEW_REQUIRED --> APPROVED: 有权限审核人批准
+  APPROVED --> SCHEDULED: 定时发布
+  APPROVED --> PUBLISHED: 立即发布
+  SCHEDULED --> PUBLISHED: 到达 UTC 时间
+  PUBLISHED --> SUPERSEDED: 新版本替代
+  PUBLISHED --> ROLLED_BACK: 恢复历史有效版本
+        </div>
+        <div class="alert alert-warning alert-soft"><span><strong>发布门禁：</strong>内容、工程数据、初步客户 handout 和正式工程方案是四条独立发布轨道。BMS 只发 API 命令；不允许直接 SQL，也不允许在 Sales Platform 故障、权限过期或缓存过期时批准/发布。</span></div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Product workbook ingestion</div>
+          <h2 class="card-title text-3xl mt-2">任意 XLSX 可以进入导入流程，但不能盲目覆盖产品库</h2>
+          <p class="opacity-70 mt-2">三份真实文件已经证明：一个 Sheet 可以重复表头、切换列语义；一个工作簿也可以混入另一类产品。系统必须先拆 logical regions，再映射、标准化、比对和审核。</p>
+        </div>
+        <div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200">
+          <div class="stat"><div class="stat-title">源文件</div><div class="stat-value text-primary">3</div><div class="stat-desc">只读检查，未修改</div></div>
+          <div class="stat"><div class="stat-title">工作表</div><div class="stat-value text-secondary">4</div><div class="stat-desc">其中一个文件含 2 Sheet</div></div>
+          <div class="stat"><div class="stat-title">逻辑区域</div><div class="stat-value text-accent">9</div><div class="stat-desc">重复表头 / 字段语义切换</div></div>
+          <div class="stat"><div class="stat-title">带型号行</div><div class="stat-value">150</div><div class="stat-desc">147 个 Sheet 内唯一型号</div></div>
+          <div class="stat"><div class="stat-title">空型号配置行</div><div class="stat-value text-warning">12</div><div class="stat-desc">有图号，需继承复核</div></div>
+        </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>文件</th><th>真实结构</th><th>关键风险</th><th>导入策略</th></tr></thead>
+            <tbody>
+              <tr><td>圆振动筛</td><td>1 Sheet / 2 regions / 45 型号行</td><td>同型号多图号；11 行空型号但有图号；合并单元格继承</td><td>型号 + 图号/配置 fingerprint；空型号进入继承复核</td></tr>
+              <tr><td>洗矿机</td><td>1 Sheet / 槽式 + 圆筒两套字段语义</td><td>同一列中途从启动电压变成筒体转速；参考重量与报价重量并存</td><td>按分类行拆 region；每个 region 独立 Mapping Profile</td></tr>
+              <tr><td>直线筛文件</td><td>2 Sheet / 5 regions / 92 型号行</td><td>第二 Sheet 是分级机；四次重复表头；区间被 Excel 当日期</td><td>不能相信文件名；同时读取 raw、显示文本和 number format</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <figure class="card bg-base-200 overflow-hidden"><div class="p-3 bg-white"><img src="product-import-assets/circular-screen.png" alt="圆振动筛工作簿实际版式" class="w-full h-72 object-contain"></div><figcaption class="p-4 text-sm"><strong>圆振动筛</strong><br><span class="opacity-65">同一 Sheet 上下两套表；大量合并区域和同型号多图号。</span></figcaption></figure>
+          <figure class="card bg-base-200 overflow-hidden"><div class="p-3 bg-white"><img src="product-import-assets/washing-machine.png" alt="洗矿机工作簿实际版式" class="w-full h-72 object-contain"></div><figcaption class="p-4 text-sm"><strong>洗矿机</strong><br><span class="opacity-65">槽式与圆筒共享页面，但部分列的工程语义发生变化。</span></figcaption></figure>
+          <figure class="card bg-base-200 overflow-hidden"><div class="p-3 bg-white"><img src="product-import-assets/linear-screen.png" alt="直线筛工作簿实际版式" class="w-full h-72 object-contain"></div><figcaption class="p-4 text-sm"><strong>直线筛</strong><br><span class="opacity-65">一个 Sheet 内四次标题/表头；区间符号、功率写法和缺失字段不统一。</span></figcaption></figure>
+          <figure class="card bg-base-200 overflow-hidden"><div class="p-3 bg-white"><img src="product-import-assets/classifier.png" alt="分级机工作簿实际版式" class="w-full h-72 object-contain"></div><figcaption class="p-4 text-sm"><strong>同一文件中的分级机 Sheet</strong><br><span class="opacity-65">证明产品类型必须按 Sheet/region 判断，不能仅看文件名。</span></figcaption></figure>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-4">
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-success badge-soft">Known profile</span><h3 class="card-title">已知格式</h3><p>表头指纹命中已审核 Mapping Profile；自动拆区和标准化，仍显示 diff 并审核。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-info badge-soft">Assisted</span><h3 class="card-title">智能建议</h3><p>确定性规则先识别；LLM 只建议产品类型、表头和长文本映射，不自动发布。</p></div></article>
+          <article class="card bg-base-200"><div class="card-body"><span class="badge badge-warning badge-soft">Manual fallback</span><h3 class="card-title">陌生 XLSX</h3><p>用户手工选择区域、表头、产品类型、字段和单位；确认后可形成新 Profile。</p></div></article>
+        </div>
+        <div class="mermaid">
+flowchart TD
+  A["上传 XLSX\n原件 + checksum"] --> B["Workbook Discovery\nSheet / merge / format / hidden"]
+  B --> C["Region Detection\n标题 / 重复表头 / 空行 / 分类行"]
+  C --> D["Mapping Profile\n或人工映射"]
+  D --> E["Deterministic Normalize\n范围 / 尺寸 / 功率 / 单位"]
+  E --> F["Identity Match\n型号 + 图号 + 配置"]
+  F --> G["Field Diff\nold / proposed / source / issue"]
+  G --> H["数据维护确认"]
+  H --> I["设备专家审核"]
+  I --> J["发布新 Spec Version\n不覆盖历史版本"]
+        </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>结果页状态</th><th>判定含义</th><th>页面展示</th><th>是否可批量处理</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-success">NEW_MODEL</span></td><td>数据库无匹配商业型号</td><td>新型号、来源、映射和全部字段</td><td>低风险且字段完整时可提交审核</td></tr>
+              <tr><td><span class="badge badge-info">NEW_VARIANT</span></td><td>型号存在，图号/配置尚不存在</td><td>现有型号 vs 新图号/配置 fingerprint</td><td>需确认同型号多图号语义</td></tr>
+              <tr><td><span class="badge badge-warning">UPDATE</span></td><td>身份匹配，标准化业务字段变化</td><td>字段 old / proposed / 原文 / 单元格</td><td>关键工程字段默认逐项审核</td></tr>
+              <tr><td><span class="badge badge-ghost">FORMAT_ONLY</span></td><td>原文变化但标准语义相同</td><td>格式差异与来源更新</td><td>可以跳过正式版本发布</td></tr>
+              <tr><td><span class="badge badge-error">CONFLICT</span></td><td>多来源或解析结果无法确定</td><td>并排来源、规则、置信度和问题</td><td>禁止批量发布</td></tr>
+              <tr><td><span class="badge badge-outline">INCOMPLETE</span></td><td>缺身份、单位或必要工程事实</td><td>缺失原因和原表位置</td><td>只能留在 staging</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-4">
+          <div class="alert alert-warning alert-soft"><div><strong>关键异常：Excel 日期强制转换</strong><br><span class="text-sm">直线筛“双振幅”部分底层值读成 46181，但表面显示 6/8。导入必须保存 raw value + formatted text + number format，并标记 DATE_COERCION_SUSPECT。</span></div></div>
+          <div class="alert alert-info alert-soft"><div><strong>关键边界：现在不能给出真实 NEW/UPDATE 数量</strong><br><span class="text-sm">本次只检查了源文件，尚未连接正式产品目录。只有与当前 published equipment spec 比较后，才能判定新增和更新。</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+      <article class="card card-border bg-base-100"><div class="card-body"><span class="badge badge-primary badge-soft">Review gate</span><h2 class="card-title">按权限审核</h2><p><span class="mono">customer.handout.review</span> 决定谁能审核初步交付件；不绑定组长、负责人或任何岗位称谓。</p></div></article>
+      <article class="card card-border bg-base-100"><div class="card-body"><span class="badge badge-info badge-soft">Locales</span><h2 class="card-title">四种输出语言</h2><p><span class="mono">zh-CN / en / ru / uk</span> 独立生成和留痕；俄语与乌克兰语不是同一份翻译。</p></div></article>
+      <article class="card card-border bg-base-100"><div class="card-body"><span class="badge badge-secondary badge-soft">Time</span><h2 class="card-title">跨时区可追溯</h2><p>数据库持久化 UTC，项目与会谈记录 IANA 时区；界面和文件显示本地时间与 UTC 偏移。</p></div></article>
+      <article class="card card-border bg-base-100"><div class="card-body"><span class="badge badge-warning badge-soft">Phase 1</span><h2 class="card-title">受控 LLM 实验</h2><p>仅用于抽取、映射、翻译/说明草稿与候选建议；工程事实、设备定型和发布门禁仍由确定性流程控制。</p></div></article>
+    </section>
+
+    <section class="grid xl:grid-cols-[1.1fr_.9fr] gap-6">
+      <article class="card card-border bg-base-100">
+        <div class="card-body">
+          <div class="section-kicker">Recommendation</div>
+          <h2 class="card-title text-3xl mt-2">混合推荐，而不是端到端 AI</h2>
+          <ul class="steps steps-vertical w-full mt-6">
+            <li class="step step-primary"><div class="text-left py-3"><strong>输入归一化</strong><div class="text-sm opacity-65">单位、同义词、缺失/矛盾、设计 t/h</div></div></li>
+            <li class="step step-primary"><div class="text-left py-3"><strong>硬约束</strong><div class="text-sm opacity-65">REJECT / REQUIRE / WARN / PREFER</div></div></li>
+            <li class="step step-primary"><div class="text-left py-3"><strong>相似案例</strong><div class="text-sm opacity-65">结构化特征优先；向量服务有评测收益后再接</div></div></li>
+            <li class="step step-primary"><div class="text-left py-3"><strong>流程模块组合</strong><div class="text-sm opacity-65">允许分支、平行物流和显式循环</div></div></li>
+            <li class="step step-primary"><div class="text-left py-3"><strong>设备筛选与校核</strong><div class="text-sm opacity-65">能力、粒度、湿干式、运输、电力、场地</div></div></li>
+            <li class="step step-primary"><div class="text-left py-3"><strong>场景排序与解释</strong><div class="text-sm opacity-65">理由、排除、依据、假设、风险</div></div></li>
+          </ul>
+        </div>
+      </article>
+      <article class="card card-border bg-base-100">
+        <div class="card-body gap-5">
+          <div class="section-kicker">Safety fallback</div>
+          <h2 class="card-title text-3xl mt-2">这些情况不应该“硬推荐”</h2>
+          <div class="space-y-3 pb-2">
+            <div class="alert alert-warning alert-soft">关键矿石/试验数据缺失</div>
+            <div class="alert alert-warning alert-soft">无候选通过硬约束</div>
+            <div class="alert alert-warning alert-soft">首批矿种/工艺白名单以外</div>
+            <div class="alert alert-warning alert-soft">规则冲突、循环异常或粗平衡不收敛</div>
+          <div class="alert alert-warning alert-soft">设备能力数据过期或无可信来源</div>
+          <div class="alert alert-warning alert-soft">LLM 不可用、越权或输出无法验证</div>
+          </div>
+          <div class="divider">系统输出</div>
+          <div class="text-center text-xl font-bold text-warning">需要人工设计 + 明确缺口清单</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Database map</div>
+          <h2 class="card-title text-3xl mt-2">数据库不是一张“万能 JSON 表”</h2>
+          <p class="opacity-70 mt-2">高频可计算字段强类型化；长尾工艺参数才进 JSON。规范化写模型与算法快照分开。</p>
+        </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>表前缀</th><th>主要内容</th><th>关键约束</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">sales_*</td><td>结构化页面、四语言翻译、媒体、ContentRelease、问卷、会谈、销售修订和打印</td><td>内容整包发布；算法/销售/工程/正式四层隔离</td></tr>
+              <tr><td class="mono">project_*</td><td>平台内部 Project、需求版本、矿石、场地、道路、输入快照</td><td>无需外部销售项目；快照不可变</td></tr>
+              <tr><td class="mono">equipment_*</td><td>设备型号、规格版本、能力包络、运行观察</td><td>条件生成列保证一个发布版本</td></tr>
+              <tr><td class="mono">case_*</td><td>历史案例、流程节点/边、设备配置</td><td>复合外键保证边两端同图</td></tr>
+              <tr><td class="mono">rule_*</td><td>规则集、规则 JSON DSL、测试案例</td><td>无 eval；发布前回归</td></tr>
+              <tr><td class="mono">rec_*</td><td>运行、依赖、候选、评分、淘汰原因</td><td>锁定全部依赖版本</td></tr>
+              <tr><td class="mono">eng_*</td><td>方案、修订、工程图、审核、发布包</td><td>从冻结销售修订创建并保留差异</td></tr>
+              <tr><td class="mono">gov_*</td><td>来源、提取事实、变更、质量、复核</td><td>AI 只写 staging</td></tr>
+              <tr><td class="mono">identity_*</td><td>BMS 外部身份、权限映射、用户首选时区</td><td>逻辑权限与未来 BMS 正式编码解耦</td></tr>
+              <tr><td class="mono">platform_*</td><td>Outbox、任务、幂等、审计、LLM 运行、四语文本</td><td>Redis/LLM 都不是事实源</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-info alert-soft"><span><strong>当前验证边界：</strong><span class="mono">database/001_initial_schema.sql</span> 已更新为 83 张表；91 条业务 SQL 已完成静态解析，但尚未做真实 MySQL 空库执行。121 从未被连接或修改。</span></div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Sales output</div>
+          <h2 class="card-title text-3xl mt-2">客户现场带走什么</h2>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="mockup-window border border-base-content/10 bg-base-200">
+            <div class="bg-base-100 p-6 space-y-5">
+              <div class="flex flex-wrap justify-between gap-3"><div><div class="text-xs opacity-55">Preliminary Handout · zh-CN · Asia/Tashkent (UTC+05:00)</div><div class="font-black text-xl">SPH-2026-001 · Sales Rev 2</div></div><span class="badge badge-success">已批准现场交付</span></div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="p-3 rounded-box bg-base-200"><div class="opacity-55">工艺段</div><div class="text-2xl font-bold">8</div></div>
+                <div class="p-3 rounded-box bg-base-200"><div class="opacity-55">设备行</div><div class="text-2xl font-bold">13</div></div>
+              </div>
+              <div class="space-y-2"><h3 class="font-bold">03 · 磨矿与分级</h3><p class="text-sm opacity-70">目的、输入/输出、设计流量、关键参数、设备配置和闭路返砂说明。</p><div class="badge badge-outline">2 × 运行</div> <div class="badge badge-outline">1 × 备用</div></div>
+              <div class="alert alert-info alert-soft text-sm">审核记录：具备 <span class="mono">customer.handout.review</span> 权限的人员已核对冻结 manifest、语言版本与 PDF/DOCX 校验和。</div>
+              <div class="alert alert-warning alert-soft text-sm">初步技术交流方案，尚未经最终工艺工程审核，不构成合同、性能保证或最终设备承诺。</div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="collapse collapse-arrow bg-base-200"><input type="checkbox" checked><div class="collapse-title font-bold">工艺流程逐段说明</div><div class="collapse-content opacity-75">每段目的、输入/输出、主要参数、物流和风险。</div></div>
+            <div class="collapse collapse-arrow bg-base-200"><input type="checkbox"><div class="collapse-title font-bold">每段设备选择</div><div class="collapse-content opacity-75">型号版本、总数/运行/备用、能力、裕量、功率、运输重量和选择理由。</div></div>
+            <div class="collapse collapse-arrow bg-base-200"><input type="checkbox"><div class="collapse-title font-bold">依据与排除说明</div><div class="collapse-content opacity-75">命中规则、相似案例、设备来源，以及为什么排除其它候选。</div></div>
+            <div class="collapse collapse-arrow bg-base-200"><input type="checkbox"><div class="collapse-title font-bold">风险、假设与待确认项</div><div class="collapse-content opacity-75">不允许在对外报告中隐藏；被替代/撤回版本带醒目水印。</div></div>
+            <div class="alert alert-success alert-soft text-sm">工程师深化并审核后，系统另行生成正式发布号；不会覆盖这份客户已带走的初步版本。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Roadmap</div>
+          <h2 class="card-title text-3xl mt-2">先让人工工作台有用，再叠加算法</h2>
+        </div>
+        <ul class="timeline timeline-vertical lg:timeline-horizontal">
+          <li><div class="timeline-start lg:mb-4 font-bold">Phase 0</div><div class="timeline-middle">●</div><div class="timeline-end timeline-box">术语、集成契约<br>金标准案例</div><hr class="bg-primary"></li>
+          <li><hr class="bg-primary"><div class="timeline-start lg:mb-4 font-bold">Phase 1</div><div class="timeline-middle">●</div><div class="timeline-end timeline-box">内容 CMS / 数据底座<br>人工闭环 + 受控 LLM</div><hr class="bg-primary"></li>
+          <li><hr class="bg-primary"><div class="timeline-start lg:mb-4 font-bold">Phase 2</div><div class="timeline-middle">●</div><div class="timeline-end timeline-box">推荐 MVP<br>解释与回退</div><hr></li>
+          <li><hr><div class="timeline-start lg:mb-4 font-bold">Phase 3</div><div class="timeline-middle">●</div><div class="timeline-end timeline-box">BMS 管理控制面完善<br>Windows/macOS 同批发布</div><hr></li>
+          <li><hr><div class="timeline-start lg:mb-4 font-bold">Phase 4</div><div class="timeline-middle">●</div><div class="timeline-end timeline-box">精细平衡<br>运行反馈</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100 decision-stripe">
+      <div class="card-body gap-6">
+        <div>
+          <div class="section-kicker">Review decisions</div>
+          <h2 class="card-title text-3xl mt-2">已确认的边界与仍需落实的事项</h2>
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-3">
+          <div class="alert alert-success alert-soft"><span><strong>系统边界</strong><br>独立 Sales Platform；BMS 认证 + 管理控制面；内部创建 Project。</span></div>
+          <div class="alert alert-success alert-soft"><span><strong>初步交付审核</strong><br>按专用权限，不按团队职位。</span></div>
+          <div class="alert alert-success alert-soft"><span><strong>输出</strong><br>zh-CN / en / ru / uk；PDF / DOCX。</span></div>
+          <div class="alert alert-success alert-soft"><span><strong>客户端与时间</strong><br>Windows/macOS 同批；UTC + IANA 时区。</span></div>
+        </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/10">
+          <table class="table table-zebra">
+            <thead><tr><th>#</th><th>尚待落实</th><th>当前安全默认</th><th>需要谁确认</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>BMS token、subject、管理菜单、BFF 和正式权限编码</td><td>平台逻辑权限先保持稳定，外部编码通过映射表接入；BMS 不复制领域数据</td><td>BMS / 集成</td></tr>
+              <tr><td>2</td><td>Sales Platform 业务后端部署位置</td><td>独立 Node.js 服务；不把领域表塞入 BMS schema</td><td>架构 / 运维</td></tr>
+              <tr><td>3</td><td>121 MySQL 实际基线与新 schema 名称</td><td>MySQL 8.0.16+、InnoDB、utf8mb4、UTC</td><td>DBA / 运维</td></tr>
+              <tr><td>4</td><td>可用源文件与首批矿种/工艺/设备范围</td><td>从资料质量最好的 1–2 个矿种开始</td><td>工艺 / 数据</td></tr>
+              <tr><td>5</td><td>LLM 供应商、数据驻留、成本与禁用策略</td><td>默认可关闭；脱敏；完整审计；确定性回退</td><td>安全 / 产品</td></tr>
+              <tr><td>6</td><td>是否允许初步交付件制作者自审</td><td>默认禁止自审，保持职责分离</td><td>业务 / 合规</td></tr>
+              <tr><td>7</td><td>内容编辑、四语言审核、媒体权利审核与发布负责人</td><td>编辑 / 翻译 / 审核 / 发布 / 媒体权限分离</td><td>市场 / 海外 / 合规</td></tr>
+              <tr><td>8</td><td>第一批网站图文和对象存储/CDN 边界</td><td>源文件与使用权确认后导入；媒体留在受控存储</td><td>内容 / 运维 / 安全</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm opacity-65">完整清单：<span class="mono doc-path">docs/15-open-questions.md</span>。可以在本评审页直接选中文字或区域添加批注。</p>
+      </div>
+    </section>
+
+    <section class="card card-border bg-base-100">
+      <div class="card-body gap-5">
+        <div class="section-kicker">Artifact map</div>
+        <h2 class="card-title text-3xl">设计包清单</h2>
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3 text-sm">
+          <div class="p-4 rounded-box bg-base-200"><strong>主设计</strong><div class="mono opacity-65 mt-1 doc-path">docs/sales-platform/design.md</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>内容管理设计</strong><div class="mono opacity-65 mt-1 doc-path">docs/content-management/design.md</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>BMS 管理控制面</strong><div class="mono opacity-65 mt-1 doc-path">docs/bms-control-plane/design.md</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>产品 Excel 导入设计</strong><div class="mono opacity-65 mt-1 doc-path">docs/product-import/design.md</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>产品与工作流</strong><div class="mono opacity-65 mt-1 doc-path">docs/01…02</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>领域与架构</strong><div class="mono opacity-65 mt-1 doc-path">docs/03…04</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>数据库与算法</strong><div class="mono opacity-65 mt-1 doc-path">docs/05…06 + database/</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>API 与前端</strong><div class="mono opacity-65 mt-1 doc-path">docs/07…08 + contracts/</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>安全与治理</strong><div class="mono opacity-65 mt-1 doc-path">docs/09…10</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>运维与验收</strong><div class="mono opacity-65 mt-1 doc-path">docs/11…12</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>路线与销售交付</strong><div class="mono opacity-65 mt-1 doc-path">docs/13…14</div></div>
+          <div class="p-4 rounded-box bg-base-200"><strong>决策记录</strong><div class="mono opacity-65 mt-1 doc-path">docs/adr/0001…0012</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-base-content/10 bg-base-100 mt-10">
+    <div class="review-shell py-8 flex flex-col md:flex-row gap-3 justify-between text-sm opacity-65">
+      <span>Design source: Lavish fallback · Tailwind CSS + DaisyUI · no existing product design system yet</span>
+      <span class="mono">sales-platform</span>
+    </div>
+  </footer>
+</body>
+</html>

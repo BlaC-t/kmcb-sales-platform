@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.pnpm-store/
+.turbo/
+.cache/
+tmp/
+output/
+.lavish/*.portable.html
+

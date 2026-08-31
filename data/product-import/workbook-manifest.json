@@ -1,0 +1,2997 @@
+{
+  "formatVersion" : 1,
+  "purpose" : "Sales Platform product workbook source and original-column baseline",
+  "writePolicy" : "Repository evidence only; database publication requires reviewed import workflow",
+  "workbooks" : [ {
+    "fileName" : "矿机产品在销售版本明细表（2026.4.13持续更新）.xlsx",
+    "sha256" : "fd0eb529896f9358d4184667abfa8eab4237859aa1d0c8ea263e48f676f91960",
+    "sizeBytes" : 105847,
+    "sheetCount" : 12,
+    "regionCount" : 17,
+    "recordCount" : 520,
+    "missingModelCount" : 60,
+    "duplicateIdentityRecordCount" : 97,
+    "regions" : [ {
+      "sheet" : "给矿机（2023.11.9技术中心已核对）",
+      "section" : "给矿机",
+      "headerRow" : 4,
+      "recordCount" : 7,
+      "productKind" : "ore-feeder",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "进料口尺寸 mm",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "min",
+        "columnTitle" : "摆复次数 次/min",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "mm_m",
+        "columnTitle" : "摆复行程 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "t_h",
+        "columnTitle" : "生产能力 t/h",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_14e5e0a1901c1ff2",
+        "columnTitle" : "底价 （万元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_2f99dc651fc827ca",
+        "columnTitle" : "报价 （万元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      } ]
+    }, {
+      "sheet" : "破碎机（2023.11.11技术中心已核对）",
+      "section" : "破碎机",
+      "headerRow" : 3,
+      "recordCount" : 26,
+      "productKind" : "crusher",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "给料口尺寸(宽×长)mm",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大进料粒度 mm",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "mm_k",
+        "columnTitle" : "排料口调整范围 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 m3/h(t/h)",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "field_14e5e0a1901c1ff2",
+        "columnTitle" : "底价 （万元）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_2f99dc651fc827ca",
+        "columnTitle" : "报价 （万元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      } ]
+    }, {
+      "sheet" : "破碎机（2023.11.11技术中心已核对）",
+      "section" : "破碎机",
+      "headerRow" : 34,
+      "recordCount" : 18,
+      "productKind" : "crusher",
+      "columns" : [ {
+        "fieldKey" : "field_0b3894ed2a385e00",
+        "columnTitle" : "产品类型",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "产品型号",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "field_d64e41da6be5dd6d",
+        "columnTitle" : "腔型",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "给料口（mm）",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度（mm）",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7_g",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7_h",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7_i",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7_j",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "field_b50b40ddb72805c7_k",
+        "columnTitle" : "冲程",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率（kW）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "主机重量（≈kg）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      } ]
+    }, {
+      "sheet" : "洗矿机(20240427更新)",
+      "section" : "洗矿机",
+      "headerRow" : 3,
+      "recordCount" : 6,
+      "productKind" : "washer",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸mm (长×宽×高)",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "槽体规格 mm",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "启动电压 V",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "入料粒度 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装 角度",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "transport",
+        "columnTitle" : "运输拆分简述",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "洗矿机(20240427更新)",
+      "section" : "圆筒",
+      "headerRow" : 11,
+      "recordCount" : 7,
+      "productKind" : "washer",
+      "columns" : [ {
+        "fieldKey" : "field_b26ce7072c5887c1",
+        "columnTitle" : "圆筒",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸mm (长×宽×高)",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筒体规格mm (内径×有效长度)",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "启动电压 V",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "给料粒度 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装 角度",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "transport",
+        "columnTitle" : "运输拆分简述",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "振动筛（2023.11.13技术中心已核对）",
+      "section" : "振动筛",
+      "headerRow" : 3,
+      "recordCount" : 71,
+      "productKind" : "circular-screen",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "t",
+        "columnTitle" : "报价总重 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理量 t/h",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装倾角 度",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 mm",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛分层数 层",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 mm",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 次/分",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 mm",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "U",
+        "displayOrder" : 20
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZKB型直线振动筛-干油振动器",
+      "headerRow" : 2,
+      "recordCount" : 13,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZKJ型直线振动筛-振动电机",
+      "headerRow" : 19,
+      "recordCount" : 14,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZK型直线振动筛-盘式稀油激振器",
+      "headerRow" : 37,
+      "recordCount" : 14,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZK型直线振动筛-箱式稀油激振器",
+      "headerRow" : 55,
+      "recordCount" : 24,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "球磨机（2023.11.22技术中心已核对）",
+      "section" : "球磨机和棒磨机",
+      "headerRow" : 2,
+      "recordCount" : 90,
+      "productKind" : "grinding-mill",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "规格（筒体直径×长度） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "v_kv",
+        "columnTitle" : "电机电压 V或kV",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "a",
+        "columnTitle" : "电机额定电流 A",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "给料粒度 mm",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "mm_m",
+        "columnTitle" : "排矿粒度 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "产量 t/h",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "t",
+        "columnTitle" : "装球量 t",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "m3",
+        "columnTitle" : "有效容积 m3",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "工作转速 r/min",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "分级机(2023.11.29技术已核对）",
+      "section" : "分级机",
+      "headerRow" : 3,
+      "recordCount" : 28,
+      "productKind" : "classifier",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "螺旋直径 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "螺旋转速 r/min",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "t_d",
+        "columnTitle" : "溢流量 t/d",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "t_d_n",
+        "columnTitle" : "返砂量 t/d",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks_t",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "搅拌槽（2023.11.29技术已核对）",
+      "section" : "搅拌槽",
+      "headerRow" : 3,
+      "recordCount" : 36,
+      "productKind" : "agitator",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "category_c",
+        "columnTitle" : "类别",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "name_d",
+        "columnTitle" : "名称",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 kg",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（最大外径×高） mm",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "m3",
+        "columnTitle" : "有效容积 m3",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "m",
+        "columnTitle" : "提升高度 m",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks_t",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "浮选机（2023.12.4技术已核对）",
+      "section" : "浮选机",
+      "headerRow" : 3,
+      "recordCount" : 98,
+      "productKind" : "flotation-machine",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "kg",
+        "columnTitle" : "单槽重 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "单槽报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "单槽有效尺寸（长×宽×高） mm",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "m3",
+        "columnTitle" : "单槽有效容积 m3",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "power_l",
+        "columnTitle" : "刮板电机功率 kW",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "mm_n",
+        "columnTitle" : "叶轮直径 mm",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "r_min",
+        "columnTitle" : "叶轮转速 r/min",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "m3_min",
+        "columnTitle" : "生产能力 m3/min",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "m3_min_q",
+        "columnTitle" : "吸气量 m3/min",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "kpa",
+        "columnTitle" : "鼓风机风压 （kpa）",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "m3_min_s",
+        "columnTitle" : "充气量 m3/min",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "U",
+        "displayOrder" : 20
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "V",
+        "displayOrder" : 21
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "W",
+        "displayOrder" : 22
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "X",
+        "displayOrder" : 23
+      }, {
+        "fieldKey" : "field_c1490c52e7217e77",
+        "columnTitle" : "配置说明",
+        "sourceColumn" : "Y",
+        "displayOrder" : 24
+      } ]
+    }, {
+      "sheet" : "输送机(2023.11.29技术已核对）",
+      "section" : "带式输送机",
+      "headerRow" : 3,
+      "recordCount" : 43,
+      "productKind" : "conveyor",
+      "columns" : [ {
+        "fieldKey" : "series",
+        "columnTitle" : "带式输送机系列",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "输送带宽度 mm",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "m",
+        "columnTitle" : "输送机长度 m",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "mm_f",
+        "columnTitle" : "输送机高度 mm",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "m_s",
+        "columnTitle" : "带速 m/s",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "t_h",
+        "columnTitle" : "输送量 t/h",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价（元）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      } ]
+    }, {
+      "sheet" : "振动喂料机（2023.11.29技术已核对）",
+      "section" : "振动喂料机/棒条给料机",
+      "headerRow" : 3,
+      "recordCount" : 12,
+      "productKind" : "vibrating-feeder",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "t",
+        "columnTitle" : "报价总重 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kw",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "槽体规格（宽×长） mm",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 mm",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "振幅 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 次/分",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装倾角 度",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价（元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价（元）",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "板式给料机（2023.11.29技术已核对）",
+      "section" : "板式给料机",
+      "headerRow" : 3,
+      "recordCount" : 13,
+      "productKind" : "apron-feeder",
+      "columns" : [ {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 kg",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长宽高） mm",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "减速电机型号",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "r_min",
+        "columnTitle" : "电机转速 r/min",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "入料粒度 mm",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装角度 度",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价（元）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价（元）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      } ]
+    } ]
+  }, {
+    "fileName" : "圆振动筛产品参数表-260626.xlsx",
+    "sha256" : "8f1e8ecba6be0aaca95d6b1874cb2a2b6a6e116e85cd3b2e7fbda444e7c6ca47",
+    "sizeBytes" : 19943,
+    "sheetCount" : 1,
+    "regionCount" : 2,
+    "recordCount" : 56,
+    "missingModelCount" : 2,
+    "duplicateIdentityRecordCount" : 0,
+    "regions" : [ {
+      "sheet" : "Sheet1",
+      "section" : "SZZ型自定中心振动筛",
+      "headerRow" : 2,
+      "recordCount" : 12,
+      "productKind" : "circular-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "参考重量 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "Sheet1",
+      "section" : "YK（A）型圆振动筛",
+      "headerRow" : 18,
+      "recordCount" : 44,
+      "productKind" : "circular-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "参考重量 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    } ]
+  }, {
+    "fileName" : "直线筛产品在销售版本明细表-2026.4.20.xlsx",
+    "sha256" : "8e3de379b54d8fd1f5d8d541cb3610eca63da4067c2a722624cf85ccf4633033",
+    "sizeBytes" : 31573,
+    "sheetCount" : 2,
+    "regionCount" : 5,
+    "recordCount" : 93,
+    "missingModelCount" : 1,
+    "duplicateIdentityRecordCount" : 0,
+    "regions" : [ {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZKB型直线振动筛-干油振动器",
+      "headerRow" : 2,
+      "recordCount" : 13,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZKJ型直线振动筛-振动电机",
+      "headerRow" : 19,
+      "recordCount" : 14,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZK型直线振动筛-盘式稀油激振器",
+      "headerRow" : 37,
+      "recordCount" : 14,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "直线振动筛-260420更新",
+      "section" : "ZK型直线振动筛-箱式稀油激振器",
+      "headerRow" : 55,
+      "recordCount" : 24,
+      "productKind" : "linear-screen",
+      "columns" : [ {
+        "fieldKey" : "sequence",
+        "columnTitle" : "序号",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "series",
+        "columnTitle" : "系列",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "型号规格",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "总重 （Kg）",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筛面规格 （mm）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "area",
+        "columnTitle" : "筛面面积 （㎡）",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "decks",
+        "columnTitle" : "筛网层数",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "筛面倾角 （°）",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "amplitude",
+        "columnTitle" : "双振幅 （mm）",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "振动频率 （次/min）",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 （ t/h）",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "最大给料粒度 （mm）",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 （kw）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "分级机(2023.11.29技术已核对）",
+      "section" : "分级机",
+      "headerRow" : 3,
+      "recordCount" : 28,
+      "productKind" : "classifier",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "螺旋直径 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "螺旋转速 r/min",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "t_d",
+        "columnTitle" : "溢流量 t/d",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "t_d_n",
+        "columnTitle" : "返砂量 t/d",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks_t",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    } ]
+  }, {
+    "fileName" : "洗矿机产品在销售版本明细表(2026.04洗矿机更新).xlsx",
+    "sha256" : "ddf5c981025f9678a397594b4546164a5f8470521b583b4d16a24bbdb31ce7d7",
+    "sizeBytes" : 16328,
+    "sheetCount" : 1,
+    "regionCount" : 2,
+    "recordCount" : 13,
+    "missingModelCount" : 0,
+    "duplicateIdentityRecordCount" : 0,
+    "regions" : [ {
+      "sheet" : "洗矿机(202604核对）",
+      "section" : "洗矿机",
+      "headerRow" : 3,
+      "recordCount" : 6,
+      "productKind" : "washer",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸mm (长×宽×高)",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "槽体规格 mm",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "启动电压 V",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "入料粒度 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装角度 度",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "transport",
+        "columnTitle" : "运输拆分简述",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    }, {
+      "sheet" : "洗矿机(202604核对）",
+      "section" : "圆筒",
+      "headerRow" : 11,
+      "recordCount" : 7,
+      "productKind" : "washer",
+      "columns" : [ {
+        "fieldKey" : "field_b26ce7072c5887c1",
+        "columnTitle" : "圆筒",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸mm (长×宽×高)",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "main_spec",
+        "columnTitle" : "筒体规格mm (内径×有效长度)",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "启动电压 V",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "处理能力 t/h",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "给料粒度 mm",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "inclination",
+        "columnTitle" : "安装角度 度",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "transport",
+        "columnTitle" : "运输拆分简述",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    } ]
+  }, {
+    "fileName" : "矿机产品在销售版本明细表2026.05.19(分级机).xlsx",
+    "sha256" : "78152dca4979d8f7e82fe885ef9edb96ae544ee964f5c5d8b8d4d488af75cd19",
+    "sizeBytes" : 20347,
+    "sheetCount" : 1,
+    "regionCount" : 1,
+    "recordCount" : 38,
+    "missingModelCount" : 0,
+    "duplicateIdentityRecordCount" : 0,
+    "regions" : [ {
+      "sheet" : "分级机(技术已核对20260519）",
+      "section" : "分级机",
+      "headerRow" : 3,
+      "recordCount" : 38,
+      "productKind" : "classifier",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "quote_weight_t",
+        "columnTitle" : "报价重量 t",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "v",
+        "columnTitle" : "电压 V",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "螺旋直径 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "螺旋转速 r/min",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "t_d",
+        "columnTitle" : "溢流量 t/d",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "t_d_n",
+        "columnTitle" : "返砂量 t/d",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "field_45a6e119a26d79dd",
+        "columnTitle" : "底价 （元）",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "field_7f7b93ebc1851078",
+        "columnTitle" : "报价 （元）",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      }, {
+        "fieldKey" : "remarks_t",
+        "columnTitle" : "备注",
+        "sourceColumn" : "T",
+        "displayOrder" : 19
+      } ]
+    } ]
+  }, {
+    "fileName" : "球磨机和棒磨机在销售版本明细表（2026.4.13持续更新）.xlsx",
+    "sha256" : "6fdb7ee54cf6e167d4b0ec5819f3396d14a97654ea4904201f76f0476fa8dae7",
+    "sizeBytes" : 23845,
+    "sheetCount" : 1,
+    "regionCount" : 1,
+    "recordCount" : 69,
+    "missingModelCount" : 0,
+    "duplicateIdentityRecordCount" : 0,
+    "regions" : [ {
+      "sheet" : "球磨机（2026.04）",
+      "section" : "球磨机和棒磨机",
+      "headerRow" : 2,
+      "recordCount" : 69,
+      "productKind" : "grinding-mill",
+      "columns" : [ {
+        "fieldKey" : "category",
+        "columnTitle" : "类别",
+        "sourceColumn" : "A",
+        "displayOrder" : 0
+      }, {
+        "fieldKey" : "name",
+        "columnTitle" : "名称",
+        "sourceColumn" : "B",
+        "displayOrder" : 1
+      }, {
+        "fieldKey" : "model",
+        "columnTitle" : "规格型号",
+        "sourceColumn" : "C",
+        "displayOrder" : 2
+      }, {
+        "fieldKey" : "drawing_no",
+        "columnTitle" : "图号",
+        "sourceColumn" : "D",
+        "displayOrder" : 3
+      }, {
+        "fieldKey" : "weight_kg",
+        "columnTitle" : "重量 Kg",
+        "sourceColumn" : "E",
+        "displayOrder" : 4
+      }, {
+        "fieldKey" : "dimensions",
+        "columnTitle" : "外形尺寸（长×宽×高） mm",
+        "sourceColumn" : "F",
+        "displayOrder" : 5
+      }, {
+        "fieldKey" : "mm",
+        "columnTitle" : "规格（筒体直径×长度） mm",
+        "sourceColumn" : "G",
+        "displayOrder" : 6
+      }, {
+        "fieldKey" : "motor_model",
+        "columnTitle" : "电机型号（参考）",
+        "sourceColumn" : "H",
+        "displayOrder" : 7
+      }, {
+        "fieldKey" : "power",
+        "columnTitle" : "电机功率 kW",
+        "sourceColumn" : "I",
+        "displayOrder" : 8
+      }, {
+        "fieldKey" : "v_kv",
+        "columnTitle" : "电机电压 V或kV",
+        "sourceColumn" : "J",
+        "displayOrder" : 9
+      }, {
+        "fieldKey" : "feed_size",
+        "columnTitle" : "给料粒度 mm",
+        "sourceColumn" : "K",
+        "displayOrder" : 10
+      }, {
+        "fieldKey" : "mm_l",
+        "columnTitle" : "排矿粒度 mm",
+        "sourceColumn" : "L",
+        "displayOrder" : 11
+      }, {
+        "fieldKey" : "capacity",
+        "columnTitle" : "产量 t/h",
+        "sourceColumn" : "M",
+        "displayOrder" : 12
+      }, {
+        "fieldKey" : "t",
+        "columnTitle" : "装球量 t",
+        "sourceColumn" : "N",
+        "displayOrder" : 13
+      }, {
+        "fieldKey" : "m3",
+        "columnTitle" : "有效容积 m3",
+        "sourceColumn" : "O",
+        "displayOrder" : 14
+      }, {
+        "fieldKey" : "frequency",
+        "columnTitle" : "工作转速 r/min",
+        "sourceColumn" : "P",
+        "displayOrder" : 15
+      }, {
+        "fieldKey" : "standard_supply",
+        "columnTitle" : "标准配置供货范围",
+        "sourceColumn" : "Q",
+        "displayOrder" : 16
+      }, {
+        "fieldKey" : "options",
+        "columnTitle" : "选配项",
+        "sourceColumn" : "R",
+        "displayOrder" : 17
+      }, {
+        "fieldKey" : "remarks",
+        "columnTitle" : "备注",
+        "sourceColumn" : "S",
+        "displayOrder" : 18
+      } ]
+    } ]
+  } ]
+}

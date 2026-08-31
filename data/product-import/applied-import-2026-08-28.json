@@ -1,0 +1,91 @@
+{
+  "formatVersion": 1,
+  "operationId": "approved-new-model-import-2026-08-28-01",
+  "target": {
+    "server": "192.168.9.121",
+    "schema": "kj_sale_platform",
+    "prototypeModel": "sp_*"
+  },
+  "approval": {
+    "scope": "Insert new unique models only",
+    "existingProductUpdatesAccepted": 0,
+    "conflictingRowsAccepted": 0,
+    "operatorMarker": "codex-approved-import-20260828"
+  },
+  "safety": {
+    "validationSchema": "kj_sale_platform_validate_codex_20260828_01",
+    "validationSchemaRemoved": true,
+    "backupSchema": "kj_sale_platform_backup_20260828_01",
+    "backupProductCount": 110,
+    "backupCreatedAtUtc": "2026-08-28T09:06:29.328Z"
+  },
+  "result": {
+    "beforeProductCount": 110,
+    "addedProductCount": 269,
+    "afterProductCount": 379,
+    "sourceFileCount": 6,
+    "importBatchCount": 4,
+    "columnSchemaCount": 24,
+    "productAttributeCount": 5403,
+    "changeHistoryCount": 5403,
+    "nonAddedChangeHistoryCount": 0,
+    "duplicateIdentityGroupCount": 0,
+    "firstBatchAppliedAtUtc": "2026-08-28T09:06:31.670Z",
+    "lastBatchAppliedAtUtc": "2026-08-28T09:07:44.336Z"
+  },
+  "batches": [
+    {
+      "batchId": 1,
+      "fileName": "矿机产品在销售版本明细表（2026.4.13持续更新）.xlsx",
+      "parsedModels": 520,
+      "acceptedNewModels": 134,
+      "detectedConflicts": 136
+    },
+    {
+      "batchId": 2,
+      "fileName": "直线筛产品在销售版本明细表-2026.4.20.xlsx",
+      "parsedModels": 93,
+      "acceptedNewModels": 51,
+      "detectedConflicts": 1
+    },
+    {
+      "batchId": 3,
+      "fileName": "球磨机和棒磨机在销售版本明细表（2026.4.13持续更新）.xlsx",
+      "parsedModels": 69,
+      "acceptedNewModels": 69,
+      "detectedConflicts": 0
+    },
+    {
+      "batchId": 4,
+      "fileName": "矿机产品在销售版本明细表2026.05.19(分级机).xlsx",
+      "parsedModels": 38,
+      "acceptedNewModels": 15,
+      "detectedConflicts": 0
+    }
+  ],
+  "deduplication": {
+    "identity": "product_kind + normalized model + normalized drawing_no",
+    "currentDatabaseDuplicateIdentityGroupsBefore": 0,
+    "currentDatabaseDuplicateIdentityGroupsAfter": 0,
+    "exactDuplicateGroupsInProvidedWorkbooks": 0,
+    "sameIdentityDifferentParameterGroupsInMasterWorkbook": 24,
+    "sameIdentityDifferentParameterRowsInMasterWorkbook": 76,
+    "crossFileOverlappingIdentityGroups": 181,
+    "crossFileDifferentParameterGroups": 104,
+    "resolution": "Specialized workbooks take precedence over the master workbook. Same-identity rows with different parameters are excluded from automatic publication and remain review conflicts."
+  },
+  "productKinds": {
+    "agitator": 36,
+    "apron-feeder": 13,
+    "circular-screen": 56,
+    "classifier": 42,
+    "conveyor": 1,
+    "crusher": 26,
+    "flotation-machine": 39,
+    "grinding-mill": 69,
+    "linear-screen": 65,
+    "ore-feeder": 7,
+    "vibrating-feeder": 12,
+    "washer": 13
+  }
+}

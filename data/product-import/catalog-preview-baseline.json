@@ -1,0 +1,21 @@
+{
+  "formatVersion": 1,
+  "catalogSchema": "kj_sale_platform",
+  "catalogServer": "121",
+  "catalogRecordCountAtPreview": 110,
+  "previewOnly": true,
+  "databaseWritePerformed": false,
+  "notes": [
+    "Each workbook was compared independently; counts must not be summed because files overlap.",
+    "UPDATED includes first-time original-column registration when the fixed catalog value is unchanged.",
+    "Rows with a missing model or duplicate identity are conflicts and cannot be auto-accepted."
+  ],
+  "workbooks": [
+    { "fileName": "矿机产品在销售版本明细表（2026.4.13持续更新）.xlsx", "models": 520, "added": 326, "updated": 58, "unchanged": 0, "conflicts": 136, "changedFields": 7832, "defaultSelected": 382 },
+    { "fileName": "圆振动筛产品参数表-260626.xlsx", "models": 56, "added": 0, "updated": 54, "unchanged": 0, "conflicts": 2, "changedFields": 1080, "defaultSelected": 45 },
+    { "fileName": "直线筛产品在销售版本明细表-2026.4.20.xlsx", "models": 93, "added": 51, "updated": 41, "unchanged": 0, "conflicts": 1, "changedFields": 1840, "defaultSelected": 92 },
+    { "fileName": "洗矿机产品在销售版本明细表(2026.04洗矿机更新).xlsx", "models": 13, "added": 0, "updated": 13, "unchanged": 0, "conflicts": 0, "changedFields": 260, "defaultSelected": 13 },
+    { "fileName": "矿机产品在销售版本明细表2026.05.19(分级机).xlsx", "models": 38, "added": 38, "updated": 0, "unchanged": 0, "conflicts": 0, "changedFields": 760, "defaultSelected": 38 },
+    { "fileName": "球磨机和棒磨机在销售版本明细表（2026.4.13持续更新）.xlsx", "models": 69, "added": 69, "updated": 0, "unchanged": 0, "conflicts": 0, "changedFields": 1311, "defaultSelected": 69 }
+  ]
+}

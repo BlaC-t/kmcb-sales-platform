@@ -1,0 +1,307 @@
+asyncapi: 3.1.0
+info:
+  title: Sales Platform Events
+  version: 0.1.0-draft
+  description: Draft domain and integration events published through the transactional outbox.
+defaultContentType: application/json
+channels:
+  domainEvents:
+    address: sales-platform.domain.events
+    messages:
+      projectCreated:
+        $ref: '#/components/messages/ProjectCreated'
+      salesContentReleasePublished:
+        $ref: '#/components/messages/SalesContentReleasePublished'
+      recommendationCompleted:
+        $ref: '#/components/messages/RecommendationCompleted'
+      candidateSelectedBySales:
+        $ref: '#/components/messages/CandidateSelectedBySales'
+      salesConsultationCompleted:
+        $ref: '#/components/messages/SalesConsultationCompleted'
+      salesProposalRevisionReady:
+        $ref: '#/components/messages/SalesProposalRevisionReady'
+      preliminaryCustomerHandoutGenerated:
+        $ref: '#/components/messages/PreliminaryCustomerHandoutGenerated'
+      preliminaryCustomerHandoutApproved:
+        $ref: '#/components/messages/PreliminaryCustomerHandoutApproved'
+      salesProposalSubmittedToEngineering:
+        $ref: '#/components/messages/SalesProposalSubmittedToEngineering'
+      engineeringRevisionApproved:
+        $ref: '#/components/messages/EngineeringRevisionApproved'
+      salesPackageReleased:
+        $ref: '#/components/messages/SalesPackageReleased'
+      equipmentSpecificationPublished:
+        $ref: '#/components/messages/EquipmentSpecificationPublished'
+      ruleSetPublished:
+        $ref: '#/components/messages/RuleSetPublished'
+      historicalCasePublished:
+        $ref: '#/components/messages/HistoricalCasePublished'
+      llmRunCompleted:
+        $ref: '#/components/messages/LlmRunCompleted'
+operations:
+  publishDomainEvents:
+    action: send
+    channel:
+      $ref: '#/channels/domainEvents'
+components:
+  schemas:
+    EventEnvelope:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - schemaVersion
+        - occurredAt
+        - aggregateType
+        - aggregateId
+        - data
+      properties:
+        eventId: { type: string, format: uuid }
+        eventType: { type: string }
+        schemaVersion: { type: integer, minimum: 1 }
+        occurredAt: { type: string, format: date-time }
+        aggregateType: { type: string }
+        aggregateId: { type: string, format: uuid }
+        correlationId: { type: [string, 'null'], format: uuid }
+        causationId: { type: [string, 'null'], format: uuid }
+        data: { type: object }
+  messages:
+    SalesContentReleasePublished:
+      name: SalesContentReleasePublished
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [releaseId, releaseNumber, collectionId, channel, locales, manifestChecksum, publishedAt, publishedBy]
+                properties:
+                  releaseId: { type: string, format: uuid }
+                  releaseNumber: { type: string }
+                  collectionId: { type: string, format: uuid }
+                  channel: { type: string }
+                  locales:
+                    type: array
+                    uniqueItems: true
+                    items: { enum: [zh-CN, en, ru, uk] }
+                  manifestChecksum: { type: string }
+                  publishedAt: { type: string, format: date-time }
+                  publishedBy: { type: string, format: uuid }
+    ProjectCreated:
+      name: ProjectCreated
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [projectId, projectCode, siteTimeZone, createdBy]
+                properties:
+                  projectId: { type: string, format: uuid }
+                  projectCode: { type: string }
+                  siteTimeZone: { type: string }
+                  createdBy: { type: string, format: uuid }
+    RecommendationCompleted:
+      name: RecommendationCompleted
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [runId, projectId, status, candidateCount]
+                properties:
+                  runId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+                  status: { enum: [SUCCEEDED, FAILED] }
+                  candidateCount: { type: integer, minimum: 0 }
+                  failureCode: { type: [string, 'null'] }
+    CandidateSelectedBySales:
+      name: CandidateSelectedBySales
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [candidateId, proposalId, proposalRevisionId, projectId]
+                properties:
+                  candidateId: { type: string, format: uuid }
+                  proposalId: { type: string, format: uuid }
+                  proposalRevisionId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+    SalesConsultationCompleted:
+      name: SalesConsultationCompleted
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [consultationId, projectId, requirementVersionId]
+                properties:
+                  consultationId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+                  requirementVersionId: { type: string, format: uuid }
+    SalesProposalRevisionReady:
+      name: SalesProposalRevisionReady
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [proposalId, proposalRevisionId, projectId, equipmentSelectionCount]
+                properties:
+                  proposalId: { type: string, format: uuid }
+                  proposalRevisionId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+                  equipmentSelectionCount: { type: integer, minimum: 0 }
+                  engineeringConfirmationCount: { type: integer, minimum: 0 }
+    PreliminaryCustomerHandoutGenerated:
+      name: PreliminaryCustomerHandoutGenerated
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [handoutId, handoutNumber, proposalRevisionId, projectId, locale, formats, status]
+                properties:
+                  handoutId: { type: string, format: uuid }
+                  handoutNumber: { type: string }
+                  proposalRevisionId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+                  locale: { enum: [zh-CN, en, ru, uk] }
+                  formats:
+                    type: array
+                    items: { enum: [PDF, DOCX] }
+                  status: { enum: [PENDING_REVIEW] }
+    PreliminaryCustomerHandoutApproved:
+      name: PreliminaryCustomerHandoutApproved
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [handoutId, handoutNumber, projectId, reviewerId, reviewedManifestChecksum, approvedAt]
+                properties:
+                  handoutId: { type: string, format: uuid }
+                  handoutNumber: { type: string }
+                  projectId: { type: string, format: uuid }
+                  reviewerId: { type: string, format: uuid }
+                  reviewedManifestChecksum: { type: string }
+                  approvedAt: { type: string, format: date-time }
+    SalesProposalSubmittedToEngineering:
+      name: SalesProposalSubmittedToEngineering
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [proposalRevisionId, solutionId, engineeringRevisionId, projectId]
+                properties:
+                  proposalRevisionId: { type: string, format: uuid }
+                  solutionId: { type: string, format: uuid }
+                  engineeringRevisionId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+    EngineeringRevisionApproved:
+      name: EngineeringRevisionApproved
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [revisionId, solutionId, reviewerId]
+                properties:
+                  revisionId: { type: string, format: uuid }
+                  solutionId: { type: string, format: uuid }
+                  reviewerId: { type: string, format: uuid }
+    SalesPackageReleased:
+      name: SalesPackageReleased
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [releaseId, releaseNumber, revisionId, projectId, publishedAt]
+                properties:
+                  releaseId: { type: string, format: uuid }
+                  releaseNumber: { type: string }
+                  revisionId: { type: string, format: uuid }
+                  projectId: { type: string, format: uuid }
+                  publishedAt: { type: string, format: date-time }
+                  supersedesReleaseId: { type: [string, 'null'], format: uuid }
+    EquipmentSpecificationPublished:
+      name: EquipmentSpecificationPublished
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [equipmentModelId, specVersionId, versionNo]
+                properties:
+                  equipmentModelId: { type: string, format: uuid }
+                  specVersionId: { type: string, format: uuid }
+                  versionNo: { type: integer, minimum: 1 }
+    RuleSetPublished:
+      name: RuleSetPublished
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [ruleSetVersionId, ruleSetCode, versionNo]
+                properties:
+                  ruleSetVersionId: { type: string, format: uuid }
+                  ruleSetCode: { type: string }
+                  versionNo: { type: integer, minimum: 1 }
+    HistoricalCasePublished:
+      name: HistoricalCasePublished
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [historicalCaseId, caseCode]
+                properties:
+                  historicalCaseId: { type: string, format: uuid }
+                  caseCode: { type: string }
+    LlmRunCompleted:
+      name: LlmRunCompleted
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              data:
+                type: object
+                required: [llmRunId, purpose, provider, modelId, status]
+                properties:
+                  llmRunId: { type: string, format: uuid }
+                  projectId: { type: [string, 'null'], format: uuid }
+                  purpose: { enum: [DOCUMENT_EXTRACTION, FIELD_MAPPING, TRANSLATION_DRAFT, NARRATIVE_DRAFT, CANDIDATE_SUGGESTION] }
+                  provider: { type: string }
+                  modelId: { type: string }
+                  status: { enum: [SUCCEEDED, FAILED, BLOCKED_BY_POLICY, CANCELLED] }
